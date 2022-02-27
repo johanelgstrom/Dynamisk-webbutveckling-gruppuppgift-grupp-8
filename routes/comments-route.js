@@ -10,11 +10,6 @@ router.get('/', async (req,res) => {
     res.render('comments/comments-list', {comments})
 })
 
-router.get('/:id', async (req,res) => {
-    const comment = await CommentsModel.findById(req.params.id).lean()
-    res.render('comments/comment-single', comment)
-})
-
 // ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
 router.get('/seed-data', async (req,res) => {
     const newComment = new CommentsModel({
@@ -27,6 +22,12 @@ router.get('/seed-data', async (req,res) => {
     await newComment.save()
 
     res.redirect('/comments')
+})
+// ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
+
+router.get('/:id', async (req,res) => {
+    const comment = await CommentsModel.findById(req.params.id).lean()
+    res.render('comments/comment-single', comment)
 })
 
 module.exports = router
