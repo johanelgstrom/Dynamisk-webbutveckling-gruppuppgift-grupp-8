@@ -11,11 +11,12 @@ const utils = require('./utils.js')
 
 const loginRouter = require("./routes/login-route.js");
 
+const app = express();
+
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use(cookieParser())
-const app = express();
 
 app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: true }));
