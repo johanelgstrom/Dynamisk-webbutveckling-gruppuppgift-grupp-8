@@ -1,26 +1,32 @@
-require('dotenv').config()
-require('./mongoose.js')
+require("dotenv").config();
+require("./mongoose.js");
 
-const express = require('express')
-const exphbs = require('express-handlebars')
-const jwt = require('jsonwebtoken')
-const cookieParser = require('cookie-parser')
+const express = require("express");
+const exphbs = require("express-handlebars");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
-const utils = require('./utils.js')
+const utils = require("./utils.js");
 
-const app = express()
+const loginRouter = require("./routes/login-route.js");
 
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({extended: true}))
-app.use(cookieParser())
+const app = express();
 
-app.engine('hbs', exphbs.engine({
-    extname: '.hbs',
-    defaultLayout: 'main'
-}))
+app.set("view engine", "hbs");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(cookieParser());
+
+app.engine(
+  "hbs",
+  exphbs.engine({
+    extname: ".hbs",
+    defaultLayout: "main",
+  })
+);
 
 // app.use((req,res,next) => {
-//     const {token} = req.cookies 
+//     const {token} = req.cookies
 
 //     if(token && jwt.verify(token, process.env.JWTSECRET)){
 //         const tokenData = jwt.decode(token, process.env.JWTSECRET)
@@ -44,10 +50,12 @@ app.engine('hbs', exphbs.engine({
 //     }
 // }
 
-app.get('/', async (req,res) => {
-    res.send('test')
-})
+// app.get("/", async (req, res) => {
+//   res.render("home");
+// });
+
+app.use("/", loginRouter);
 
 app.listen(8000, () => {
-    console.log('http://localhost:8000');
-})
+  console.log("http://localhost:8000");
+});
