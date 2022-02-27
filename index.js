@@ -6,12 +6,14 @@ const exphbs = require('express-handlebars')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 
+const commentsRouter = require('./routes/comments-route.js')
 const utils = require('./utils.js')
 
 const app = express()
 
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
 app.use(cookieParser())
 
 app.engine('hbs', exphbs.engine({
@@ -44,8 +46,10 @@ app.engine('hbs', exphbs.engine({
 //     }
 // }
 
+app.use('/comments', commentsRouter)
+
 app.get('/', async (req,res) => {
-    res.send('test')
+    res.render('home')
 })
 
 app.listen(8000, () => {
