@@ -4,14 +4,19 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
+const postsModel = require("../models/postsModel");
 
 router.get("/", async (req, res) => {
   res.render("home");
 });
 
 //LOGGA IN
-router.post("/login", async (req, res) => {
+router.post("/posts", async (req, res) => {
   const { username, password } = req.body;
+  const articles = await postsModel
+    .find()
+    .sort([["time", "desc"]])
+    .lean();
 
   UsersModel.findOne({ username }, (err, user) => {
     if (user && utils.comparePassword(password, user.hashedPassword)) {
@@ -24,7 +29,7 @@ router.post("/login", async (req, res) => {
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
       res.cookie("token", accessToken);
-      res.render("inloggad/flow", { username });
+      res.render("posts", { username, articles });
     } else {
       res.send("Login failed");
     }
@@ -55,7 +60,7 @@ router.post("/register", async (req, res) => {
       });
 
       await newUser.save();
-      res.render("inloggad/flow", { username });
+      res.render("posts", { username });
       //   res.sendStatus(200);
     }
   });
