@@ -23,11 +23,15 @@ router.get('/seed-data', async (req,res) => {
 
     res.redirect('/comments')
 })
+router.use('/', (req,res) => {
+    res.status(404).render('not-found')
+  })
 // ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
 
 router.get('/:id', async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id).lean()
     res.render('comments/comment-single', comment)
 })
+
 
 module.exports = router

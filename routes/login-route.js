@@ -1,5 +1,6 @@
 const express = require("express");
 const utils = require("../utils.js");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
