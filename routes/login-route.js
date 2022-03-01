@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
-const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
   res.render("home");
