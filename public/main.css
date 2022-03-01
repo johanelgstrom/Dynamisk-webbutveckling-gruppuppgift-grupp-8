@@ -4,11 +4,16 @@
   box-sizing: border-box;
 }
 
+.loginbackground {
+  height: 100vh;
+}
+
 .loginmaincontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20%;
+  justify-content: space-between;
+  position: relative;
 }
 
 .loginheader {
@@ -18,10 +23,49 @@
   align-items: center;
 }
 
+.loginformcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logininput {
+  border: none;
+  border-bottom: 1px solid #333;
+  background: none;
+  margin: 10px;
+}
+.loginbtn {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #333;
+  padding: 10px;
+  margin-top: 10px;
+  background: none;
+}
+
+.loginbtn:hover {
+  cursor: pointer;
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.loginbtn:active {
+  cursor: pointer;
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
 .forgotorcreatecontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
+}
+
+.forgotorcreate {
+  margin-top: 10px;
 }
 
 .registercontainer {
