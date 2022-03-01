@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
+const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
   res.render("home");
@@ -24,7 +25,7 @@ router.post("/login", async (req, res) => {
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
       res.cookie("token", accessToken);
-      res.redirect("/");
+      res.render("inloggad/flow", { username });
     } else {
       res.send("Login failed");
     }
@@ -37,10 +38,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/create-account", (req, res) => {
   res.render("login/create-account");
-});
-
-router.get("/create-account", (req, res) => {
-  res.render("/login/create-account");
 });
 
 router.post("/register", async (req, res) => {
@@ -59,8 +56,8 @@ router.post("/register", async (req, res) => {
       });
 
       await newUser.save();
-
-      res.sendStatus(200);
+      res.render("inloggad/flow", { username });
+      //   res.sendStatus(200);
     }
   });
 });

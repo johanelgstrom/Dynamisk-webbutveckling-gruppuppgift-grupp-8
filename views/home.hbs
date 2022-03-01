@@ -4,20 +4,31 @@
     <h3>Share your travels with the world</h3>
   </div>
 
-  <form action="/login" method="post">
-    <input type="text" name="username" placeholder="Username" />
-    <br />
-    <input type="password" name="password" placeholder="Password" />
-    <br />
-    <input type="submit" value="Login" />
-  </form>
+  <div class="loginformcontainer">
+    <form action="/login" method="post">
+      <input
+        class="logininput"
+        type="text"
+        name="username"
+        placeholder="Username"
+      />
+      <br />
+      <input
+        class="logininput"
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+      <br />
+      <input class="loginbtn" type="submit" value="Login" />
+    </form>
 
-  <div class="forgotorcreatecontainer">
-    <div>Forgot your login details?
-      <a href="/forgot-password">Click here.</a></div>
-    <div>Or</div>
-    <div>Dont have an account?
-      <a href="/create-account">Create one here</a></div>
+    <div class="forgotorcreatecontainer">
+      <div class="forgotorcreate">Forgot your login details?
+        <a href="/forgot-password">Click here.</a></div>
+      <div class="forgotorcreate">Or</div>
+      <div class="forgotorcreate">Dont have an account?
+        <a href="/create-account">Create one here</a></div>
+    </div>
   </div>
-
 </div>
