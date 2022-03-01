@@ -16,16 +16,15 @@ router.get('/seed-data', async (req,res) => {
         postId: '34534534535',
         description: 'wAAAAAAAAAAAAAAAAAAAAA',
         time: Date.now(),
-        likes: 444
     })
 
     await newComment.save()
 
     res.redirect('/comments')
 })
-router.use('/', (req,res) => {
-    res.status(404).render('not-found')
-  })
+// router.use('/', (req,res) => {
+//     res.status(404).render('not-found')
+//   })
 // ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
 
 router.get('/:id', async (req,res) => {

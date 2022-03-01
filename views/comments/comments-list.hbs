@@ -5,9 +5,9 @@
 {{#each comments}}
     <div class="comments-border-test">
         <p><a href="/comments/{{_id}}">Post ID: {{_id}}</a></p>
-        <p>Comment on <a href="/posts/{{postId}}">{{postId}}</a></p>
-        <h5>{{description}}</h5>
-        <p>{{time}}</p>
+        <p>Comment on <a href="/posts/read-post/{{postId}}">{{postId}}</a></p>
+        <p>{{description}}</p>
+        <p>{{formateDate time}}</p>
         <p>Likes: {{likes}}</p>
     </div>
 {{/each}}
