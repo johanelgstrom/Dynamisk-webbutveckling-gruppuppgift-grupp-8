@@ -37,3 +37,11 @@
 .comments-border-test {
   border: 1px solid black;
 }
+
+
+
+.postcontainer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

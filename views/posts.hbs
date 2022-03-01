@@ -1,0 +1,12 @@
+<h2>posts:</h2>
+<div class="postcontainer">
+{{#each articles}}
+
+    <article>
+        <h3>{{title}}</h3>
+        <p class = "post-date">{{formateDate time}}</p>
+        <p><a href="/posts/read-post/{{_id}}">read post</a></p>
+    </article>
+{{/each}}
+</div>
+<a href="/posts/new-post">new post</a>
