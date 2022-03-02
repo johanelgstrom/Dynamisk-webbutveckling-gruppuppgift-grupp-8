@@ -8,6 +8,16 @@
         <p>Comment on <a href="/posts/read-post/{{postId}}">{{postId}}</a></p>
         <p>{{description}}</p>
         <p>{{formateDate time}}</p>
-        <p>Likes: {{likes}}</p>
+        {{#if result}}
+        <a href="/comments/{{_id}}/unlike">Unlike this comment</a>
+        {{else}}
+        <a href="/comments/{{_id}}/like">Like this comment</a>
+        {{/if}}
+        {{#if likes}}
+        <p>Likes: {{likes.length}}</p>
+        {{else}}
+        <p>Likes: 0</p>
+        {{/if}}
+
     </div>
 {{/each}}

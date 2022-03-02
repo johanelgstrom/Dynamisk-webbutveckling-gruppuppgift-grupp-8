@@ -35,6 +35,12 @@ app.engine(
       formateDate: (time) => {
           const date = new Date(time)
           return date.toLocaleDateString() + " " + date.toLocaleTimeString()
+      },
+      isEqual: (username, likes, options) => {
+        if (likes.indexOf(username) > -1) {
+          return options.fn(this)
+        }
+        return options.inverse(this)
       }
   }
   })

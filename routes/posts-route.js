@@ -59,28 +59,24 @@ router.get('/read-post/:id', async (req,res) => {
 
 router.post('/:id/comment', async (req,res) => {
     const post = await postsModel.findById(req.params.id).lean()
-    console.log(post);
     const newComment = new CommentsModel({
         postId: req.params.id,
         description: req.body.comment,
         time: Date.now(),
         likes: []
     })
-    console.log(req.params.id);
     await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
     await newComment.save()
     res.redirect('/posts')
 })
 router.post('/read-post/:id/comment', async (req,res) => {
     const post = await postsModel.findById(req.params.id).lean()
-    console.log(post);
     const newComment = new CommentsModel({
         postId: req.params.id,
         description: req.body.comment,
         time: Date.now(),
         likes: []
     })
-    console.log(req.params.id);
     await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
     await newComment.save()
     res.redirect(`/posts/read-post/${req.params.id}`)
