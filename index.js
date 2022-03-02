@@ -11,6 +11,7 @@ const utils = require('./utils.js')
 
 const loginRouter = require("./routes/login-route.js");
 const postsRouter = require("./routes/posts-route.js");
+const fileUpload = require("express-fileupload");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
+app.use(fileUpload())
 
 app.engine(
   "hbs",
