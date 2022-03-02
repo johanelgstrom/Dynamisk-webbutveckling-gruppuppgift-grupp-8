@@ -3,8 +3,11 @@ require('dotenv').config()
 const express = require("express")
 process.env.CONNECTION_STRING
 
-const postsModel = require("../models/postsModel")
+const postsModel = require("../models/postsModel");
+const { getUniqueFilename } = require('../utils');
 const router = express.Router();
+const fileupload = require('express-fileupload')
+
 
 router.get('/', async (req, res) => {
     
@@ -31,7 +34,18 @@ router.get('/new-post', (req,res) => {
 })
 
 router.post('/new-post', async (req,res) => {
-    const newArticle = new postsModel(req.body)
+
+    const image = req.files.image
+    const filename = getUniqueFilename(image.name)
+    const uploadpath = __dirname + '/../public/uploads/' + filename
+
+    await image.mv(uploadpath)
+
+    const newArticle = new postsModel({
+        title: req.body.title,
+        imageName: req.body.imageName,
+        imgUrl: '/uploads/' + filename
+    })
 
     const result = await newArticle.save()
     res.redirect('read-post/' + result._id)

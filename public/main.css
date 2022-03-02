@@ -45,3 +45,16 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.post-bildcontainer{
+  width: 80%;
+  height: 600px;
+  margin: 0 auto;
+
+}
+
+.post-bild{
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}

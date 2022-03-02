@@ -11,7 +11,18 @@ const comparePassword = (password, hash) => {
   return correct;
 };
 
+const getUniqueFilename = (filename) => {
+  const timestamp= Date.now()
+
+  const extension = filename.split(".").pop();
+
+  return `${timestamp}.${extension}`
+}
+
+
 module.exports = {
   hashedPassword,
   comparePassword,
+  getUniqueFilename
+  
 };
