@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
+const postsModel = require("../models/postsModel");
 
 //Om man inte är inloggad
 

@@ -7,6 +7,7 @@ const CommentsModel = require("../models/CommentsModel.js");
 const { getUniqueFilename } = require("../utils");
 const router = express.Router();
 const fileupload = require("express-fileupload");
+const jwt = require("jsonwebtoken");
 
 const forceAuthorize = (req, res, next) => {
   const { token } = req.cookies;

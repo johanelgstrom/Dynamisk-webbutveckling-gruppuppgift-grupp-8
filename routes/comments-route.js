@@ -1,7 +1,7 @@
 const express = require("express");
 const utils = require("../utils.js");
 const CommentsModel = require("../models/CommentsModel.js");
-
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 //Om man inte är inloggad
