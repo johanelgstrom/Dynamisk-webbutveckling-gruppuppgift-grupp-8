@@ -1,5 +1,8 @@
 require("dotenv").config();
 require("./mongoose.js");
+require("./passport.js");
+
+const passport = require("passport");
 
 const express = require("express");
 const exphbs = require("express-handlebars");
@@ -20,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(fileUpload());
+app.use(passport.initialize());
 
 app.engine(
   "hbs",
