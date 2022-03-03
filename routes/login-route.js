@@ -5,6 +5,8 @@ const router = express.Router();
 const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
 const postsModel = require("../models/postsModel");
+const GoogleModel = require("../models/GoogleModels");
+const passport = require("passport");
 
 //Om man inte är inloggad
 
@@ -117,5 +119,67 @@ router.post("/register", async (req, res) => {
   });
 });
 //!SKAPA KONTO
+
+//GOOGLE LOGIN
+router.get("/failed", (req, res) => {
+  res.send("Failed");
+});
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/failed" }),
+  async (req, res) => {
+    const { token } = req.cookies;
+    const articles = await postsModel
+      .find()
+      .sort([["time", "desc"]])
+      .lean();
+    GoogleModel.findOne({ googleId: req.user.id }, async (err, user) => {
+      const userData = { displayName: req.user.displayName };
+
+      if (user) {
+        userData.id = user._id;
+      } else {
+        const newUser = new GoogleModel({
+          googleId: req.user.id,
+          displayName: req.user.displayName,
+        });
+        const result = await newUser.save();
+        userData.id = result._id;
+      }
+
+      const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+      const displayName = userData.displayName;
+      // console.log(user);
+      res.cookie("token", accessToken);
+      res.render("posts", { displayName, articles, token });
+    });
+  }
+);
+
+router.use((req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    res.locals.loginInfo = tokenData.displayName + " " + tokenData.id;
+  } else {
+    res.locals.loginInfo = "not logged in";
+  }
+
+  next();
+});
+
+router.get("/logout", (req, res) => {
+  res.cookie("token", "", { maxAge: 0 });
+  res.redirect("/");
+});
+
+//!GOOGLE LOGIN
 
 module.exports = router;
