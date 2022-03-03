@@ -100,7 +100,6 @@ router.post("/read-post/:id/comment", forceAuthorize, async (req, res) => {
 });
 
 module.exports = router;
-const fileupload = require("express-fileupload");
 
 router.get("/", async (req, res) => {
   const articles = await postsModel
