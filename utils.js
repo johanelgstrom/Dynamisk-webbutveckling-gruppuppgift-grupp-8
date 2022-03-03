@@ -19,10 +19,27 @@ const getUniqueFilename = (filename) => {
   return `${timestamp}.${extension}`
 }
 
+const checkIfLiked = async (username, id, model) => {
+  const object = await model.findById(id).lean()
+  if (object.likes.length > 0) {
+    for (let i = 0; i < object.likes.length; i++) {
+      if (object.likes[i] === username) {
+        return true
+      }
+    }
+  }
+}
+
+const checkAuthorUsername = async (username, author) => {
+  if(username === author) {
+    return true
+  }
+}
 
 module.exports = {
   hashedPassword,
   comparePassword,
-  getUniqueFilename
-  
+  getUniqueFilename,
+  checkIfLiked,
+  checkAuthorUsername
 };

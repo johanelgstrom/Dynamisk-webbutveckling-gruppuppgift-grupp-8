@@ -192,39 +192,31 @@ router.get("/read-post/:id", async (req, res) => {
   res.render("read-post", article);
 });
 
-router.post("/:id/comment", async (req, res) => {
-  const post = await postsModel.findById(req.params.id).lean();
-  console.log(post);
-  const newComment = new CommentsModel({
-    postId: req.params.id,
-    description: req.body.comment,
-    time: Date.now(),
-    likes: [],
-  });
-  console.log(req.params.id);
-  await postsModel.updateOne(
-    { _id: req.params.id },
-    { $push: { comments: newComment } }
-  );
-  await newComment.save();
-  res.redirect("/posts");
-});
-router.post("/read-post/:id/comment", async (req, res) => {
-  const post = await postsModel.findById(req.params.id).lean();
-  console.log(post);
-  const newComment = new CommentsModel({
-    postId: req.params.id,
-    description: req.body.comment,
-    time: Date.now(),
-    likes: [],
-  });
-  console.log(req.params.id);
-  await postsModel.updateOne(
-    { _id: req.params.id },
-    { $push: { comments: newComment } }
-  );
-  await newComment.save();
-  res.redirect(`/posts/read-post/${req.params.id}`);
-});
+router.post('/:id/comment', async (req,res) => {
+    const post = await postsModel.findById(req.params.id).lean()
+    const newComment = new CommentsModel({
+        author: res.locals.username,
+        postId: req.params.id,
+        description: req.body.comment,
+        time: Date.now(),
+        likes: []
+    })
+    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
+    await newComment.save()
+    res.redirect('/posts')
+})
+router.post('/read-post/:id/comment', async (req,res) => {
+    const post = await postsModel.findById(req.params.id).lean()
+    const newComment = new CommentsModel({
+        author: res.locals.username,
+        postId: req.params.id,
+        description: req.body.comment,
+        time: Date.now(),
+        likes: []
+    })
+    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
+    await newComment.save()
+    res.redirect(`/posts/read-post/${req.params.id}`)
+})
 
 module.exports = router;
