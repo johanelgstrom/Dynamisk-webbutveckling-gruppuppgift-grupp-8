@@ -44,6 +44,8 @@ router.post('/new-post', async (req,res) => {
 
     const newArticle = new postsModel({
         title: req.body.title,
+        time: Date.now(),
+        content: req.body.content,
         imageName: req.body.imageName,
         imgUrl: '/uploads/' + filename
     })
@@ -51,6 +53,49 @@ router.post('/new-post', async (req,res) => {
     const result = await newArticle.save()
     res.redirect('read-post/' + result._id)
 })
+
+router.get('/:id/delete', async (req,res) => {
+
+    const article = await postsModel.findById(req.params.id).lean()
+
+    res.render('delete-post', article);
+})
+
+router.post('/:id/delete', async (req,res) => {
+    const id = req.params.id
+   
+    const article = await postsModel.findById(req.params.id).lean()
+
+    await postsModel.deleteOne({_id: id})
+
+    res.redirect('/posts')
+})
+
+router.get('/:id/edit', async (req,res) => {
+    const article = await postsModel.findById(req.params.id).lean()
+    res.render('edit-post', article)
+
+})
+
+router.get('/:id/edit', async (req,res) => {
+
+    const id  = req.params.id
+    const image = req.files.image
+    const filename = getUniqueFilename(image.name)
+    const uploadpath = __dirname + '/../public/uploads/' + filename
+
+    await image.mv(uploadpath)
+
+    const article = await postsModel.updateOne({ _id: id},
+        { $set: { title: req.body.title, imageName: req.body.imageName,
+         imgUrl:'/uploads/' + filename,
+         content: req.body.content } 
+    })
+  
+    res.sendStatus(200)
+    
+})
+
 
 router.get('/read-post/:id', async (req,res) => {
     const article = await postsModel.findById(req.params.id).lean()
