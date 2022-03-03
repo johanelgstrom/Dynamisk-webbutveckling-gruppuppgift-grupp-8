@@ -1,7 +1,7 @@
 <a href="/logout">Log out</a>
 <h2>{{title}}</h2>
 
-<p>{{content}}</p>
+<img class="post-bild" src="{{imgUrl}}" />
 
 {{#if comments}}
   {{#each comments}}
@@ -11,9 +11,12 @@
     </div>
   {{/each}}
 {{/if}}
+
+<p>{{content}}</p>
 <form action="/posts/read-post/{{_id}}/comment" method="post">
   <textarea name="comment" id="" cols="30" rows="10" required></textarea>
   <input type="submit" value="Post comment" />
 </form>
-<img class="post-bild" src="{{imgUrl}}" />
-<p>{{content}}</p>
+
+<a href="/posts/{{_id}}/edit"><button>edit post</button></a>
+<a href="/posts/{{_id}}/delete"><button>delete post</button></a>

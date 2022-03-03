@@ -1,0 +1,10 @@
+<h2>edit post: {{_title}}</h2>
+
+<form action="/posts/{{_id}}/edit" method="post" enctype="multipart/form-data">
+
+    <input type="text" name="title" value="{{title}}"> <br>
+    <input type="text" name="imageName" placeholder="image name"><br>
+    <input type="file" name="image"><br>
+    <textarea name="content" placeholder="{{description}}"></textarea><br>
+    <input type="submit" value="save">
+</form>
