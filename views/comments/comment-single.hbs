@@ -1,11 +1,14 @@
-<h3>{{_id}}</h3>
+
+<h3>{{comment._id}}</h3>
 
 <div class="comments-border-test">
-        <p><a href="/posts/read-post/{{comment.postId}}">Commeted on: {{comment._id}}</a></p>
+        
+        <p><a href="/posts/read-post/{{comment.postId}}">Commented on: {{comment._id}}</a></p>
+        <p>Posted by {{comment.author}}</p>
         <p>{{comment.description}}</p>
         <p>{{formateDate comment.time}}</p>
         {{#if result}}
-        <a href="/comments/{{comment._id}}/">Unlike this comment</a>
+        <a href="/comments/{{comment._id}}/unlike">Unlike this comment</a>
         {{else}}
         <a href="/comments/{{comment._id}}/like">Like this comment</a>
         {{/if}}
@@ -14,4 +17,11 @@
         {{else}}
         <p>Likes: 0</p>
         {{/if}}
+        
+        
+        
     </div>
+{{#if validAuthor}}
+<a href="/comments/{{comment._id}}/edit">Edit</a>
+<a href="/comments/{{comment._id}}/delete">Delete</a>
+{{/if}}

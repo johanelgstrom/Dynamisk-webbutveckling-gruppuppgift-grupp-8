@@ -6,13 +6,9 @@
     <div class="comments-border-test">
         <p><a href="/comments/{{_id}}">Post ID: {{_id}}</a></p>
         <p>Comment on <a href="/posts/read-post/{{postId}}">{{postId}}</a></p>
+        <p>Posted by {{author}}</p>
         <p>{{description}}</p>
         <p>{{formateDate time}}</p>
-        {{#if result}}
-        <a href="/comments/{{_id}}/unlike">Unlike this comment</a>
-        {{else}}
-        <a href="/comments/{{_id}}/like">Like this comment</a>
-        {{/if}}
         {{#if likes}}
         <p>Likes: {{likes.length}}</p>
         {{else}}

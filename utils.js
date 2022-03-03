@@ -26,19 +26,20 @@ const checkIfLiked = async (username, id, model) => {
       if (object.likes[i] === username) {
         return true
       }
-      // else {
-      //   return false
-      // }
     }
   }
-  // else {
-  //   return false
-  // }
+}
+
+const checkAuthorUsername = async (username, author) => {
+  if(username === author) {
+    return true
+  }
 }
 
 module.exports = {
   hashedPassword,
   comparePassword,
   getUniqueFilename,
-  checkIfLiked
+  checkIfLiked,
+  checkAuthorUsername
 };
