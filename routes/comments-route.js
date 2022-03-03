@@ -1,7 +1,9 @@
+const mongoose = require('mongoose')
 const express = require("express");
 const utils = require("../utils.js");
 const CommentsModel = require("../models/CommentsModel.js");
 const jwt = require("jsonwebtoken");
+const postsModel = require("../models/postsModel.js");
 const router = express.Router();
 
 //Om man inte är inloggad
@@ -40,9 +42,6 @@ router.get("/seed-data", forceAuthorize, async (req, res) => {
 
   res.redirect("/comments");
 });
-// router.use('/', (req,res) => {
-//     res.status(404).render('not-found')
-//   })
 // ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
 
 router.get('/:id', forceAuthorize, async (req,res) => {
@@ -93,5 +92,47 @@ router.get('/:id/unlike', async (req,res) => {
         res.sendStatus(403)
     }
 })
+
+router.get('/:id/edit', async (req,res) => {
+    const comment = await CommentsModel.findById(req.params.id).lean()
+    res.render('comments/comment-edit', comment)
+})
+router.post('/:id/edit', async (req,res) => {
+    const comment = await CommentsModel.findById(req.params.id)
+    const result = await utils.checkAuthorUsername(res.locals.username, comment.author)
+    if(result == true) {
+        await postsModel.findById(comment.postId).updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $set: {"comments.$.description": `${req.body.description}`} }).lean()
+    
+    comment.description = req.body.description
+    await comment.save()
+    
+    
+    console.log('CHANGED IN COMMENT');
+
+    res.sendStatus(200)
+    }
+    else {
+        res.sendStatus(403)
+    }
+    
+    
+})
+router.get('/:id/delete', async (req,res) => {
+    const comment = await CommentsModel.findById(req.params.id)
+    const result = await utils.checkAuthorUsername(res.locals.username, comment.author)
+    if(result == true) {
+        await postsModel.findById(comment.postId).updateOne({_id: comment.postId}, {$pull: {comments: {_id: comment._id}}})
+        
+        await comment.delete()
+        res.redirect('/comments')
+    }
+    else {
+        res.sendStatus(403)
+    }
+})
+
+// router.use('/', (req,res) => {
+//     res.status(404).render('not-found')
+//   })
 
 module.exports = router

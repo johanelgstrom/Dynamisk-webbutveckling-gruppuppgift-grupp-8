@@ -68,6 +68,7 @@ router.post("/:id/comment", forceAuthorize, async (req, res) => {
   const post = await postsModel.findById(req.params.id).lean();
   console.log(post);
   const newComment = new CommentsModel({
+    author: res.locals.username,
     postId: req.params.id,
     description: req.body.comment,
     time: Date.now(),
@@ -85,6 +86,7 @@ router.post("/read-post/:id/comment", forceAuthorize, async (req, res) => {
   const post = await postsModel.findById(req.params.id).lean();
   console.log(post);
   const newComment = new CommentsModel({
+    author: res.locals.username,
     postId: req.params.id,
     description: req.body.comment,
     time: Date.now(),
