@@ -4,6 +4,7 @@ const utils = require("../utils.js");
 const CommentsModel = require("../models/CommentsModel.js");
 const jwt = require("jsonwebtoken");
 const postsModel = require("../models/postsModel.js");
+const { sendStatus } = require('express/lib/response');
 const router = express.Router();
 
 //Om man inte är inloggad
@@ -25,46 +26,43 @@ const forceAuthorize = (req, res, next) => {
 
 router.get('/', forceAuthorize, async (req,res) => {
     const comments = await CommentsModel.find().lean()
-    const username = res.locals.username
-    console.log(res.locals.username);
     
-    res.render('comments/comments-list', {comments, username})
+    res.render('comments/comments-list', {comments})
 })
-// ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
-router.get("/seed-data", forceAuthorize, async (req, res) => {
-  const newComment = new CommentsModel({
-    postId: "34534534535",
-    description: "wAAAAAAAAAAAAAAAAAAAAA",
-    time: Date.now(),
-  });
-
-  await newComment.save();
-
-  res.redirect("/comments");
-});
-// ANVÄND DENNA FÖR ATT SKICKA IN TESTKOMMENTARER I DATABASEN
 
 router.get('/:id', forceAuthorize, async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id).lean()
-    const result = await utils.checkIfLiked(res.locals.username, req.params.id, CommentsModel)
-    const validAuthor = await utils.checkAuthorUsername(res.locals.username, comment.author)
+    let result = false
+    let validAuthor = false
+    if(res.locals.fullName) {
+        result = await utils.checkIfLiked(res.locals.fullName, req.params.id, CommentsModel)
+        validAuthor = await utils.checkAuthorUsername(res.locals.fullName, comment.author)
+    }
+    else {
+        result = await utils.checkIfLiked(res.locals.loginInfo, req.params.id, CommentsModel)
+        validAuthor = await utils.checkAuthorUsername(res.locals.loginInfo, comment.author)
+    }
+    // console.log(res.locals);
+    // console.log(result);
+    // console.log(validAuthor);
+    
     if(validAuthor === true) {
         if (result == true) {
-            console.log('TRUE');
+            
             res.render('comments/comment-single', {comment, result, validAuthor})
         }
         else {
-            console.log('FALSE');
+            
             res.render('comments/comment-single', {comment, validAuthor})
         }
     }
     else {
         if (result == true) {
-            console.log('TRUE');
+            
             res.render('comments/comment-single', {comment, result})
         }
         else {
-            console.log('FALSE');
+            
             res.render('comments/comment-single', {comment})
         }
     }
@@ -72,24 +70,62 @@ router.get('/:id', forceAuthorize, async (req,res) => {
 
 router.get('/:id/like', async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id).lean()
-    await CommentsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.username}})
+    // console.log(res.locals.fullName);
+    if(res.locals.fullName) {
+        const user = res.locals.fullName
+        await CommentsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.fullName}})
+        await postsModel.updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $push: {"comments.$.likes": user} }).lean()
+    }
+    else {
+        const user = res.locals.loginInfo
+        await CommentsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.loginInfo}})
+        await postsModel.updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $push: {"comments.$.likes": user} }).lean()
+    }
+    
     res.redirect(`/comments/${req.params.id}`)
 })
 
 router.get('/:id/unlike', async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id).lean()
-    console.log(comment.author);
-    const result = await utils.checkAuthorUsername(res.locals.username, comment.author)
-    if(result === true) {
-        for (let i = 0; i < comment.likes.length; i++) {
-            if(comment.likes[i] === res.locals.username) {
-                await CommentsModel.updateOne({_id: req.params.id}, { $pull: {likes: res.locals.username}})
-                res.redirect(`/comments/${req.params.id}`)
+    const post = await postsModel.findById(comment.postId).lean()
+
+    console.log(post.comments.length);
+    
+    if(res.locals.fullName) {
+        const user = res.locals.fullName
+            for (let i = 0; i < comment.likes.length; i++) {
+
+                if(comment.likes[i] === res.locals.fullName) {
+                    const result = await utils.checkAuthorUsername(res.locals.fullName, comment.likes[i])
+                    if(result === true) {
+                        await CommentsModel.updateOne({_id: req.params.id}, { $pull: {likes: res.locals.fullName}})
+                    res.redirect(`/comments/${req.params.id}`)
+                    }
+                    
+                }
             }
-        }
+            for (let i = 0; i < post.comments.length; i++) {
+                    await postsModel.updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $pull: {"comments.$.likes": user} }).lean()    
+            }
+            
+    
     }
     else {
-        res.sendStatus(403)
+        const user = res.locals.loginInfo
+            for (let i = 0; i < comment.likes.length; i++) {
+
+                if(comment.likes[i] === res.locals.loginInfo) {
+                    const result = await utils.checkAuthorUsername(res.locals.loginInfo, comment.likes[i])
+                    if(result === true) {
+                        await CommentsModel.updateOne({_id: req.params.id}, { $pull: {likes: res.locals.loginInfo}})
+                    res.redirect(`/comments/${req.params.id}`)
+                    }
+                    
+                }
+            }
+            for (let i = 0; i < post.comments.length; i++) {
+                    await postsModel.updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $pull: {"comments.$.likes": user} }).lean()    
+            }
     }
 })
 
@@ -99,27 +135,41 @@ router.get('/:id/edit', async (req,res) => {
 })
 router.post('/:id/edit', async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id)
-    const result = await utils.checkAuthorUsername(res.locals.username, comment.author)
+    if(res.locals.fullName) {
+        const result = await utils.checkAuthorUsername(res.locals.fullName, comment.author)
     if(result == true) {
         await postsModel.findById(comment.postId).updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $set: {"comments.$.description": `${req.body.description}`} }).lean()
     
     comment.description = req.body.description
     await comment.save()
     
-    
-    console.log('CHANGED IN COMMENT');
-
-    res.sendStatus(200)
+    res.redirect(`/comments/${req.params.id}`)
     }
     else {
         res.sendStatus(403)
+    }
+    }
+    else {
+        const result = await utils.checkAuthorUsername(res.locals.loginInfo, comment.author)
+    if(result == true) {
+        await postsModel.findById(comment.postId).updateOne({_id: comment.postId, "comments.description": `${comment.description}`}, { $set: {"comments.$.description": `${req.body.description}`} }).lean()
+    
+    comment.description = req.body.description
+    await comment.save()
+    
+    res.redirect(`/comments/${req.params.id}`)
+    }
+    else {
+        res.sendStatus(403)
+    }
     }
     
     
 })
 router.get('/:id/delete', async (req,res) => {
     const comment = await CommentsModel.findById(req.params.id)
-    const result = await utils.checkAuthorUsername(res.locals.username, comment.author)
+    if(res.locals.fullName) {
+        const result = await utils.checkAuthorUsername(res.locals.fullName, comment.author)
     if(result == true) {
         await postsModel.findById(comment.postId).updateOne({_id: comment.postId}, {$pull: {comments: {_id: comment._id}}})
         
@@ -129,6 +179,20 @@ router.get('/:id/delete', async (req,res) => {
     else {
         res.sendStatus(403)
     }
+    }
+    else {
+        const result = await utils.checkAuthorUsername(res.locals.loginInfo, comment.author)
+    if(result == true) {
+        await postsModel.findById(comment.postId).updateOne({_id: comment.postId}, {$pull: {comments: {_id: comment._id}}})
+        
+        await comment.delete()
+        res.redirect('/comments')
+    }
+    else {
+        res.sendStatus(403)
+    }
+    }
+    
 })
 
 // router.use('/', (req,res) => {
