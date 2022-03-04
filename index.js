@@ -39,13 +39,28 @@ app.engine(
   })
 );
 
+// app.use((req, res, next) => {
+//   const { token } = req.cookies;
+
+//   if (token && jwt.verify(token, process.env.JWTSECRET)) {
+//     const tokenData = jwt.decode(token, process.env.JWTSECRET);
+
+//     res.locals.loginInfo = tokenData.displayName + " " + tokenData.id;
+//   } else {
+//     res.locals.loginInfo = "not logged in";
+//   }
+
+//   next();
+// });
+
 app.use((req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
     res.locals.loggedIn = true;
-    res.locals.username = tokenData.username;
+    res.locals.fullName = tokenData.fullName;
+    res.locals.loginInfo = tokenData.displayName;
   } else {
     res.locals.loggedIn = false;
   }

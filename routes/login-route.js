@@ -53,24 +53,22 @@ router.get("/", ifLoggedIn, (req, res) => {
 //LOGGA IN
 router.post("/posts", forceAuthorize, async (req, res) => {
   const { username, password } = req.body;
-  const { token } = req.cookies;
-  const articles = await postsModel
-    .find()
-    .sort([["time", "desc"]])
-    .lean();
+  const fullName = req.body.fullName;
+  console.log(fullName);
 
   UsersModel.findOne({ username }, (err, user) => {
     if (user && utils.comparePassword(password, user.hashedPassword)) {
       //Login correct
       const userData = {
         userId: user._id,
+        fullName: user.fullName,
         username,
       };
 
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
       res.cookie("token", accessToken);
-      res.render("posts", { username, articles, token });
+      res.redirect("/posts");
     } else {
       res.render("home");
     }
@@ -81,7 +79,7 @@ router.post("/posts", forceAuthorize, async (req, res) => {
 
 //LOGGA UT
 router.get("/logout", (req, res) => {
-  res.cookie("token", "", { maxAge: 1 });
+  res.cookie("token", "", { maxAge: 0 });
   res.redirect("/");
 });
 //!LOGGA UT
@@ -93,31 +91,28 @@ router.get("/create-account", ifLoggedIn, (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { username, password, secret, confirmPassword } = req.body;
-  const { token } = req.cookies;
-  const articles = await postsModel
-    .find()
-    .sort([["time", "desc"]])
-    .lean();
+  const { fullName, username, password, confirmPassword } = req.body;
 
-  UsersModel.findOne({ username }, async (err, user) => {
+  UsersModel.findOne({ username, fullName }, async (err, user) => {
     if (user) {
       res.send("Username already exists");
     } else if (password !== confirmPassword) {
       res.send("Password don't match");
     } else {
       const newUser = new UsersModel({
+        fullName,
         username,
         hashedPassword: utils.hashedPassword(password),
-        // secret,
       });
 
       await newUser.save();
-      res.render("posts", { username, articles, token });
+      res.redirect("/posts");
+
       //   res.sendStatus(200);
     }
   });
 });
+
 //!SKAPA KONTO
 
 //GOOGLE LOGIN
@@ -154,26 +149,12 @@ router.get(
       }
 
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-      const displayName = userData.displayName;
-      // console.log(user);
+
       res.cookie("token", accessToken);
-      res.render("posts", { displayName, articles, token });
+      res.redirect("/posts");
     });
   }
 );
-
-router.use((req, res, next) => {
-  const { token } = req.cookies;
-
-  if (token && jwt.verify(token, process.env.JWTSECRET)) {
-    const tokenData = jwt.decode(token, process.env.JWTSECRET);
-    res.locals.loginInfo = tokenData.displayName + " " + tokenData.id;
-  } else {
-    res.locals.loginInfo = "not logged in";
-  }
-
-  next();
-});
 
 router.get("/logout", (req, res) => {
   res.cookie("token", "", { maxAge: 0 });
