@@ -54,7 +54,6 @@ router.get("/", ifLoggedIn, (req, res) => {
 router.post("/posts", forceAuthorize, async (req, res) => {
   const { username, password } = req.body;
   const fullName = req.body.fullName;
-  console.log(fullName);
 
   UsersModel.findOne({ username }, (err, user) => {
     if (user && utils.comparePassword(password, user.hashedPassword)) {
