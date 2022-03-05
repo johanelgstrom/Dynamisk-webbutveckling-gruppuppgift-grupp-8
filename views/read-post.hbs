@@ -9,6 +9,11 @@
             <p>Posted by {{author}}</p>
             <p>{{description}}</p>
             <p>{{formateDate time}}</p>
+            {{#if likes}}
+            <a href="/comments/{{_id}}"><p>Likes: {{likes.length}}</p></a>
+            {{else}}
+            <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
+            {{/if}}
         </div>
     {{/each}}
 {{/if}}
