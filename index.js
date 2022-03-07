@@ -14,6 +14,7 @@ const utils = require("./utils.js");
 
 const loginRouter = require("./routes/login-route.js");
 const postsRouter = require("./routes/posts-route.js");
+const profilRouter = require("./routes/profil-route.js");
 const fileUpload = require("express-fileupload");
 
 const app = express();
@@ -34,56 +35,35 @@ app.engine(
       formateDate: (time) => {
         const date = new Date(time);
         return date.toLocaleDateString() + " " + date.toLocaleTimeString();
-      }
-    }
+      },
+    },
   })
 );
-
-// app.use((req, res, next) => {
-//   const { token } = req.cookies;
-
-//   if (token && jwt.verify(token, process.env.JWTSECRET)) {
-//     const tokenData = jwt.decode(token, process.env.JWTSECRET);
-
-//     res.locals.loginInfo = tokenData.displayName + " " + tokenData.id;
-//   } else {
-//     res.locals.loginInfo = "not logged in";
-//   }
-
-//   next();
-// });
 
 app.use((req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    res.locals.tokenData = tokenData.user;
     res.locals.loggedIn = true;
     res.locals.fullName = tokenData.fullName;
     res.locals.loginInfo = tokenData.displayName;
+    res.locals.user = tokenData.username;
+    res.locals.userID = tokenData.userId;
+
+    console.log(tokenData);
   } else {
     res.locals.loggedIn = false;
   }
 
   next();
 });
-// const forceAuthorize = (req,res,next) => {
-//     const {token} = req.cookies
 
-//     if (token && jwt.verify(token, process.env.JWTSECRET)){
-//         next()
-//     }
-//     else {
-//         res.sendStatus(401)
-//     }
-// }
-
-// app.get("/", async (req, res) => {
-//   res.render("home");
-// });
 app.use("/comments", commentsRouter);
 app.use("/", loginRouter);
 app.use("/posts", postsRouter);
+app.use("/profil", profilRouter);
 
 app.use("/", (req, res) => {
   res.status(404).render("not-found");

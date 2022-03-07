@@ -65,11 +65,11 @@ router.post("/posts", forceAuthorize, async (req, res) => {
       };
 
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-
+      console.log(user._id);
       res.cookie("token", accessToken);
       res.redirect("/posts");
     } else {
-      res.render("home");
+      res.redirect("/");
     }
   });
 });
@@ -142,6 +142,7 @@ router.get(
         const newUser = new GoogleModel({
           googleId: req.user.id,
           displayName: req.user.displayName,
+          postedBy: userData,
         });
         const result = await newUser.save();
         userData.id = result._id;

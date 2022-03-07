@@ -4,6 +4,7 @@ process.env.CONNECTION_STRING;
 
 const postsModel = require("../models/postsModel");
 const CommentsModel = require("../models/CommentsModel.js");
+const UsersModel = require("../models/UsersModels.js");
 const { getUniqueFilename } = require("../utils");
 const router = express.Router();
 const fileupload = require("express-fileupload");
@@ -24,18 +25,8 @@ router.get("/", forceAuthorize, async (req, res) => {
     .find()
     .sort([["time", "desc"]])
     .lean();
+
   res.render("posts", { articles });
-});
-
-router.get("/seed-data", forceAuthorize, async (req, res) => {
-  const newArticle = new postsModel({
-    title: "myfirst post",
-    content: "this is my first post",
-  });
-
-  await newArticle.save();
-
-  res.sendStatus(200);
 });
 
 router.get("/new-post", forceAuthorize, (req, res) => {
@@ -48,15 +39,33 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
   const uploadpath = __dirname + "/../public/uploads/" + filename;
 
   await image.mv(uploadpath);
+  if (res.locals.fullName) {
+    const newArticle = new postsModel({
+      author: res.locals.user,
+      postedBy: res.locals.userID,
+      title: req.body.title,
+      imageName: req.body.imageName,
+      imgUrl: "/uploads/" + filename,
+      country: req.body.country,
+    });
 
-  const newArticle = new postsModel({
-    title: req.body.title,
-    imageName: req.body.imageName,
-    imgUrl: "/uploads/" + filename,
-  });
+    const result = await newArticle.save();
+    res.redirect("read-post/" + result._id);
+    // console.log(newArticle);
+  } else {
+    const newArticle = new postsModel({
+      author: res.locals.user,
+      postedBy: res.locals.userID,
+      title: req.body.title,
+      imageName: req.body.imageName,
+      imgUrl: "/uploads/" + filename,
+      country: req.body.country,
+    });
 
-  const result = await newArticle.save();
-  res.redirect("read-post/" + result._id);
+    const result = await newArticle.save();
+    res.redirect("read-post/" + result._id);
+    // console.log(newArticle);
+  }
 });
 
 router.get("/read-post/:id", forceAuthorize, async (req, res) => {
@@ -65,60 +74,70 @@ router.get("/read-post/:id", forceAuthorize, async (req, res) => {
 });
 
 router.post("/:id/comment", forceAuthorize, async (req, res) => {
-  const post = await postsModel.findById(req.params.id).lean()
-  console.log(res.locals);
-    if(res.locals.fullName) {
-      const newComment = new CommentsModel({
-        author: res.locals.fullName,
-        postId: req.params.id,
-        description: req.body.comment,
-        time: Date.now(),
-        likes: []
-    })
-    await newComment.save()
-    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
-    }
-    else {
-      const newComment = new CommentsModel({
-        author: res.locals.loginInfo,
-        postId: req.params.id,
-        description: req.body.comment,
-        time: Date.now(),
-        likes: []
-    })
-    await newComment.save()
-    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
-    }
-    
-    res.redirect('/posts')
+  const post = await postsModel.findById(req.params.id).lean();
+  // console.log(res.locals);
+  if (res.locals.fullName) {
+    const newComment = new CommentsModel({
+      author: res.locals.fullName,
+      postId: req.params.id,
+      description: req.body.comment,
+      time: Date.now(),
+      likes: [],
+    });
+    await newComment.save();
+    await postsModel.updateOne(
+      { _id: req.params.id },
+      { $push: { comments: newComment } }
+    );
+  } else {
+    const newComment = new CommentsModel({
+      author: res.locals.loginInfo,
+      postId: req.params.id,
+      description: req.body.comment,
+      time: Date.now(),
+      likes: [],
+    });
+    await newComment.save();
+    await postsModel.updateOne(
+      { _id: req.params.id },
+      { $push: { comments: newComment } }
+    );
+  }
+
+  res.redirect("/posts");
 });
 router.post("/read-post/:id/comment", forceAuthorize, async (req, res) => {
-  const post = await postsModel.findById(req.params.id).lean()
-    if(res.locals.fullName) {
-      const newComment = new CommentsModel({
-        author: res.locals.fullName,
-        postId: req.params.id,
-        description: req.body.comment,
-        time: Date.now(),
-        likes: []
-    })
-    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
-    await newComment.save()
-    }
-    else {
-      console.log(res.locals);
-      const newComment = new CommentsModel({
-        author: res.locals.loginInfo,
-        postId: req.params.id,
-        description: req.body.comment,
-        time: Date.now(),
-        likes: []
-    })
-    await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
-    await newComment.save()
-    }
-    
-    res.redirect(`/posts/read-post/${req.params.id}`)
+  const post = await postsModel.findById(req.params.id).lean();
+  if (res.locals.fullName) {
+    const newComment = new CommentsModel({
+      author: res.locals.fullName,
+      postId: req.params.id,
+      description: req.body.comment,
+      time: Date.now(),
+      likes: [],
+    });
+    await postsModel.updateOne(
+      { _id: req.params.id },
+      { $push: { comments: newComment } }
+    );
+    await newComment.save();
+  } else {
+    // console.log(res.locals);
+    const newComment = new CommentsModel({
+      author: res.locals.loginInfo,
+      postId: req.params.id,
+      description: req.body.comment,
+      time: Date.now(),
+      likes: [],
+    });
+    await postsModel.updateOne(
+      { _id: req.params.id },
+      { $push: { comments: newComment } }
+    );
+    await newComment.save();
+  }
+
+  res.redirect(`/posts/read-post/${req.params.id}`);
 });
 
 module.exports = router;
@@ -238,7 +257,7 @@ module.exports = router;
 //     await newComment.save()
 //     await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
 //     }
-    
+
 //     res.redirect('/posts')
 // })
 // router.post('/read-post/:id/comment', async (req,res) => {
@@ -266,7 +285,7 @@ module.exports = router;
 //     await postsModel.updateOne({_id: req.params.id}, { $push: {comments: newComment}})
 //     await newComment.save()
 //     }
-    
+
 //     res.redirect(`/posts/read-post/${req.params.id}`)
 // })
 

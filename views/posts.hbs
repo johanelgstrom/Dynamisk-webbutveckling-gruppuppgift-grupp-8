@@ -1,6 +1,9 @@
 <a href="/logout">Log out</a>
+<a href="/posts/new-post">new post</a>
 
-<h3>Logged in as {{fullName}} {{loginInfo}}</h3>
+<h3>Logged in as
+  <a href="/profil/{{_id}}"> {{fullName}} {{loginInfo}}</a>
+</h3>
 
 <h2>All travel stories</h2>
 <div class="postcontainer">
@@ -14,14 +17,14 @@
       <p><a href="/posts/read-post/{{_id}}">read post</a></p>
       {{#if comments}}
         {{#each comments}}
-        <div class="comment-container">
+          <div class="comment-container">
             <p>Posted by {{author}}</p>
             <p>{{description}}</p>
             <p>{{formateDate time}}</p>
             {{#if likes}}
-            <a href="/comments/{{_id}}"><p>Likes: {{likes.length}}</p></a>
+              <a href="/comments/{{_id}}"><p>Likes: {{likes.length}}</p></a>
             {{else}}
-            <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
+              <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
             {{/if}}
           </div>
         {{/each}}
@@ -34,4 +37,3 @@
     </article>
   {{/each}}
 </div>
-<a href="/posts/new-post">new post</a>

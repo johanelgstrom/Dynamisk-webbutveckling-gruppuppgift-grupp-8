@@ -38,22 +38,19 @@
   border: 1px solid black;
 }
 
-
-
-.postcontainer{
+.postcontainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.post-bildcontainer{
+.post-bildcontainer {
   width: 80%;
-  height: 600px;
-  margin: 0 auto;
-
+  height: 100px;
+  /* margin: 0 auto; */
 }
 
-.post-bild{
+.post-bild {
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
