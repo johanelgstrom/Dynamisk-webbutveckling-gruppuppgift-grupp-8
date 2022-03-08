@@ -27,7 +27,7 @@ router.get("/", forceAuthorize, async (req, res) => {
     .find()
     .sort([["time", "desc"]])
     .lean();
-
+  
   res.render("posts", { articles });
 });
 
@@ -56,9 +56,12 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
     // console.log(newArticle);
   } else {
     const loginInfo = res.locals.loginInfo
+    const { token } = req.cookies;
+    const tokenData = jwt.decode(token, process.env.JWTSECRET);
+    const userId = mongoose.Types.ObjectId(tokenData);
     const newArticle = new postsModel({
       author: loginInfo,
-      postedBy: res.locals.userID,
+      postedBy: userId,
       title: req.body.title,
       imageName: req.body.imageName,
       imgUrl: "/uploads/" + filename,
