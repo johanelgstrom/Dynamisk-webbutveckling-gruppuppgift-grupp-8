@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  font-family: 'Roboto Condensed', sans-serif; 
 }
 .loginmaincontainer {
   display: flex;
@@ -40,7 +42,7 @@
 
 
 
-.postcontainer{
+.postcontainer article{
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -48,7 +50,6 @@
 
 .post-bildcontainer{
   width: 80%;
-  height: 600px;
   margin: 0 auto;
 
 }
@@ -57,4 +58,192 @@
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
+}
+
+
+.hero{
+
+  position: relative;
+  width: 100%;
+
+
+  background-image: url(pexels-janik-butz-5366526.jpg);
+  background-position: center;
+  background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+}
+
+.hero h1{
+  color: white;
+  font-size: 3.5rem;
+}
+  
+.login{
+  padding: 10px 25px;
+
+  border: none;
+
+  background-color: rgb(50, 50, 250);
+
+  color: white;
+  border-radius: 7px;
+
+  font-size: 1.2rem;
+
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.register{
+
+  padding: 7px 21px; 
+
+  border: solid 2px white;
+  background-color: rgba(0, 0, 0, 0);
+
+  color: white;
+
+  border-radius: 7px;
+  font-size: 1.2rem;
+
+  cursor: pointer;
+}
+
+.buttonctn{
+  display: flex;
+  gap: 20px;
+
+  margin-top: 15px;
+}
+
+.register:hover{
+  background-color: rgba(0, 0, 0, 0.281)
+}
+.login:hover{
+  background-color: #6200ff7a;
+}
+
+nav{
+  width: 100%;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-around;
+
+}
+
+nav a{
+  color: black;
+
+   text-decoration: none;
+}
+
+nav a:hover{
+  text-decoration:underline;
+  color: gray;
+}
+
+#navsec1{
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+#navlinks{
+  display: flex;
+  gap: 30px;
+}
+
+#sec3{
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.hero{
+  height: 100vh;
+}
+
+.text{
+  color: white;
+
+  font-family: 'Lobster', cursive;
+  font-size: 1.2rem;
+
+  margin-left: 40px;
+
+}
+
+#arrow{
+
+  color: white;
+
+  margin-bottom: 10px;
+
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+
+.postcontainer h3{
+  text-align: center;
+
+  margin-top: 20px;
+}
+
+.post-read-section{
+  display: flex; 
+
+  gap: 20px;
+  margin-left: 10%;
+
+  
+}
+
+
+#postsheading{
+  margin-left: 10%;
+  margin-top: 20px;
+}
+
+.post-content{
+  text-align: center;
+  font-size: 1.2rem;
+
+  margin-top: 20px;
+}
+
+.read-post-title{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.commentbtn{
+  background-color: blue;
+  border: none;
+
+  border-radius: 5px;
+
+  box-shadow: 1px 1px 1px grey;
+  color: white;
+
+  padding: 5px 10px;
+}
+
+.post-comment{
+  margin-left: 10%;
 }

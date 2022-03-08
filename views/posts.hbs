@@ -1,12 +1,18 @@
-<h2>posts:</h2>
+<h2 id="postsheading">posts:</h2>
 <div class="postcontainer">
 {{#each articles}}
 
     <article>
         <h3>{{title}}</h3>
        <div class="post-bildcontainer"> <img class="post-bild" src="{{imgUrl}}"></div>
+
+       <div class="post-read-section">
         <p class = "post-date">{{formateDate time}}</p>
         <p><a href="/posts/read-post/{{_id}}">read post</a></p>
+
+        <a href="/posts/new-post">new post</a>
+        </div>
+        
         {{#if comments}}
         {{#each comments}}
         <div class="comment-container">
@@ -15,11 +21,10 @@
         </div>
         {{/each}}
         {{/if}}
-        <form action="/posts/{{_id}}/comment" method="post">
+        <form action="/posts/{{_id}}/comment" method="post" class="post-comment">
             <textarea name="comment" id="" cols="30" rows="10" required></textarea>
-            <input type='submit' value="Post comment">
+            <input type='submit' value="Post comment" class="commentbtn">
         </form>
     </article>
 {{/each}}
 </div>
-<a href="/posts/new-post">new post</a>

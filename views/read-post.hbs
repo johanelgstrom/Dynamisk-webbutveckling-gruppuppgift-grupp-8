@@ -1,4 +1,4 @@
-<h2>{{title}}</h2>
+<h2 class="read-post-title">{{title}}</h2>
  
 <img class="post-bild" src="{{imgUrl}}">
 
@@ -11,11 +11,11 @@
     {{/each}}
 {{/if}}
 
-<p>{{content}}</p>
-<form action="/posts/read-post/{{_id}}/comment" method="post">
+<p class="post-content">{{content}}</p>
+<form action="/posts/read-post/{{_id}}/comment" method="post" class="post-comment">
     <textarea name="comment" id="" cols="30" rows="10" required></textarea>
-    <input type='submit' value="Post comment">
+    <input type='submit' value="Post comment" class="commentbtn">
 </form>
 
-<a href="/posts/{{_id}}/edit"><button>edit post</button></a>
-<a href = "/posts/{{_id}}/delete"><button>delete post</button></a>
+<a href="/posts/{{_id}}/edit">edit post</a>
+<a href = "/posts/{{_id}}/delete">delete post</a>
