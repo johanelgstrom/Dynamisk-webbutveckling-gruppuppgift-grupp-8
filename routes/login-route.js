@@ -50,6 +50,10 @@ router.get("/", ifLoggedIn, (req, res) => {
   res.render("home");
 });
 
+router.get("/to-login", ifLoggedIn, (req, res) => {
+  res.render("login/login");
+});
+
 //LOGGA IN
 router.post("/posts", forceAuthorize, async (req, res) => {
   const { username, password } = req.body;

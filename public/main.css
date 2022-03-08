@@ -2,35 +2,113 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
-.loginmaincontainer {
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.notloggedinbody {
+  background-color: #fefbf5;
+  height: 100vh;
+}
+
+.notloggedinlogocontainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+}
+
+.travelstories-logo {
+  width: 60%;
+}
+
+.centercontainer {
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20%;
 }
 
-.loginheader {
+.textalign {
+  text-align: center;
+  margin: 20px 0 20px 0;
+}
+
+.centerbtn,
+.loginformcontainer {
+  width: 60%;
+}
+
+.generealbtn,
+.googleloginbtn,
+.logininput {
   width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(93, 113, 107);
+  background-color: rgba(255, 255, 255, 0);
+  color: black;
+  cursor: pointer;
+}
+
+.generealbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.02);
+}
+.generealbtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.greenbtn {
+  background-color: rgba(93, 113, 107, 0.53);
+}
+
+/*Login page*/
+.loginformcontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.forgotorcreatecontainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.loginpage {
+  margin-top: 20px;
+}
+.loginbtn {
+  color: black;
+  width: 100%;
 }
 
-.registercontainer {
+.googleloginbtn {
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.registerform {
-  display: flex;
-  flex-direction: column;
+.googleloginbtn > a {
+  margin-left: 5px;
+}
+
+.fa-google {
+  background: conic-gradient(
+      from -45deg,
+      #ea4335 110deg,
+      #4285f4 90deg 180deg,
+      #34a853 180deg 270deg,
+      #fbbc05 270deg
+    )
+    73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 /* STYLING FÖR TESTER */
@@ -54,4 +132,21 @@
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
+}
+
+@media only screen and (min-width: 1024px) {
+  .notloggedinlogocontainer {
+    height: 40%;
+  }
+  .centerbtn {
+    width: 33%;
+  }
+
+  .generealbtn {
+    font-size: 1.2rem;
+  }
+
+  .loginformcontainer {
+    width: 33%;
+  }
 }

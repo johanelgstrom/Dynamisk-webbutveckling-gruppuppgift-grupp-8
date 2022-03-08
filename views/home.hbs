@@ -1,37 +1,22 @@
-<div class="loginmaincontainer">
-  <div class="loginheader">
-    <h1>TravelStories</h1>
-    <h3>Share your travels with the world</h3>
+<div class="notloggedinbody">
+
+  <div class="notloggedinlogocontainer">
+    <img
+      class="travelstories-logo"
+      src="/images/TravelStories-logga-slogan.png"
+      alt="TravelStories logo"
+    />
   </div>
 
-  <div class="loginformcontainer">
-    <form action="/posts" method="post">
-
-      <input
-        class="logininput"
-        type="text"
-        name="username"
-        placeholder="Username"
-      />
-
-      <input
-        class="logininput"
-        type="password"
-        name="password"
-        placeholder="Password"
-      />
-
-      <input class="loginbtn" type="submit" value="Login" />
-    </form>
-
-    <a href="/google">Login with Google</a>
-
-    <div class="forgotorcreatecontainer">
-      <div class="forgotorcreate">Forgot your login details?
-        <a href="/forgot-password">Click here.</a></div>
-      <div class="forgotorcreate">Or</div>
-      <div class="forgotorcreate">Dont have an account?
-        <a href="/create-account">Create one here</a></div>
+  <div class="centercontainer">
+    <div class="centerbtn">
+      <button class="generealbtn greenbtn">
+        <a class="loginbtn" href="/to-login">Log in</a>
+      </button>
+      <div class="textalign">Or</div>
+      <button class="generealbtn">
+        <a href="/create-account">Create account</a>
+      </button>
     </div>
   </div>
 </div>
