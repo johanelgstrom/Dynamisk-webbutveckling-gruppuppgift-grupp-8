@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 process.env.CONNECTION_STRING;
 
+const mongoose = require('mongoose')
 const postsModel = require("../models/postsModel");
 const CommentsModel = require("../models/CommentsModel.js");
 const UsersModel = require("../models/UsersModels.js");
@@ -17,7 +18,7 @@ const forceAuthorize = (req, res, next) => {
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     next();
   } else {
-    res.redirect("/");
+    res.render('unauthorized')
   }
 };
 
@@ -71,6 +72,15 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
 });
 
 router.get("/read-post/:id", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
   const article = await postsModel.findById(req.params.id).lean();
   let result = false
   let validAuthor = false
@@ -102,6 +112,15 @@ router.get("/read-post/:id", forceAuthorize, async (req, res) => {
 });
 
 router.get('/read-post/:id/like', forceAuthorize, async (req,res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
   const post = await postsModel.findById(req.params.id).lean()
     // console.log(res.locals.fullName);
     if(res.locals.fullName) {
@@ -115,6 +134,15 @@ router.get('/read-post/:id/like', forceAuthorize, async (req,res) => {
 })
 
 router.get('/read-post/:id/unlike', forceAuthorize, async (req,res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
   const post = await postsModel.findById(req.params.id).lean()
     
     if(res.locals.fullName) {
@@ -147,6 +175,15 @@ router.get('/read-post/:id/unlike', forceAuthorize, async (req,res) => {
     }
 })
 router.post("/:id/comment", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
   const post = await postsModel.findById(req.params.id).lean();
   // console.log(res.locals);
   if (res.locals.fullName) {
@@ -180,6 +217,15 @@ router.post("/:id/comment", forceAuthorize, async (req, res) => {
   res.redirect("/posts");
 });
 router.post("/read-post/:id/comment", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
   const post = await postsModel.findById(req.params.id).lean();
   if (res.locals.fullName) {
     const newComment = new CommentsModel({
@@ -211,6 +257,111 @@ router.post("/read-post/:id/comment", forceAuthorize, async (req, res) => {
   }
 
   res.redirect(`/posts/read-post/${req.params.id}`);
+});
+router.get("/:id/edit", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
+  const article = await postsModel.findById(req.params.id).lean();
+  if(res.locals.fullName) {
+    const checkIfValid = await utils.checkAuthorUsername(res.locals.fullName, article.author)
+    if(checkIfValid === true) {
+      res.render("edit-post", article);
+    }
+    else {
+      res.render('unauthorized')
+    }
+  }
+  else {
+    const checkIfValid = await utils.checkAuthorUsername(res.locals.loginInfo, article.author)
+    if(checkIfValid === true) {
+      res.render("edit-post", article);
+    }
+    else {
+      res.render('unauthorized')
+    }
+  }
+  
+});
+
+router.post("/:id/edit", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
+  const id = req.params.id;
+
+  const article = await postsModel.updateOne(
+    { _id: id },
+    {
+      $set: {
+        title: req.body.title,
+        content: req.body.content,
+      },
+    }
+  );
+
+  res.redirect(`/posts/read-post/${id}`)
+});
+router.get("/:id/delete", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
+  const article = await postsModel.findById(req.params.id).lean();
+  if(res.locals.fullName) {
+    const checkIfValid = await utils.checkAuthorUsername(res.locals.fullName, article.author)
+    if(checkIfValid === true) {
+      res.render("delete-post", article);
+    }
+    else {
+      res.render('unauthorized')
+    }
+  }
+  else {
+    const checkIfValid = await utils.checkAuthorUsername(res.locals.loginInfo, article.author)
+    if(checkIfValid === true) {
+      res.render("delete-post", article);
+    }
+    else {
+      res.render('unauthorized')
+    }
+  }
+});
+
+router.post("/:id/delete", forceAuthorize, async (req, res) => {
+  if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.render('not-found')
+    return
+}
+const doesIdExist = await postsModel.exists({ _id: req.params.id });
+if(doesIdExist === null) {
+    res.render('not-found')
+    return
+}
+  const id = req.params.id;
+
+  const article = await postsModel.findById(req.params.id).lean();
+
+  await postsModel.deleteOne({ _id: id });
+
+  res.redirect("/posts");
 });
 
 module.exports = router;

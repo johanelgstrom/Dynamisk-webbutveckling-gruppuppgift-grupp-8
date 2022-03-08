@@ -19,7 +19,7 @@ const forceAuthorize = (req, res, next) => {
   ) {
     next();
   } else {
-    res.redirect("/");
+    res.render('unauthorized')
   }
 };
 //!Om man inte är inloggad
@@ -31,6 +31,15 @@ router.get('/', forceAuthorize, async (req,res) => {
 })
 
 router.get('/:id', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id).lean()
     let result = false
     let validAuthor = false
@@ -68,9 +77,17 @@ router.get('/:id', forceAuthorize, async (req,res) => {
     }
 })
 
-router.get('/:id/like', async (req,res) => {
+router.get('/:id/like', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id).lean()
-    // console.log(res.locals.fullName);
     if(res.locals.fullName) {
         const user = res.locals.fullName
         await CommentsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.fullName}})
@@ -85,7 +102,16 @@ router.get('/:id/like', async (req,res) => {
     res.redirect(`/comments/${req.params.id}`)
 })
 
-router.get('/:id/unlike', async (req,res) => {
+router.get('/:id/unlike', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id).lean()
     const post = await postsModel.findById(comment.postId).lean()
 
@@ -129,11 +155,29 @@ router.get('/:id/unlike', async (req,res) => {
     }
 })
 
-router.get('/:id/edit', async (req,res) => {
+router.get('/:id/edit', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id).lean()
     res.render('comments/comment-edit', comment)
 })
-router.post('/:id/edit', async (req,res) => {
+router.post('/:id/edit', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id)
     if(res.locals.fullName) {
         const result = await utils.checkAuthorUsername(res.locals.fullName, comment.author)
@@ -146,7 +190,7 @@ router.post('/:id/edit', async (req,res) => {
     res.redirect(`/comments/${req.params.id}`)
     }
     else {
-        res.sendStatus(403)
+        res.status(401).render('unauthorized')
     }
     }
     else {
@@ -160,13 +204,22 @@ router.post('/:id/edit', async (req,res) => {
     res.redirect(`/comments/${req.params.id}`)
     }
     else {
-        res.sendStatus(403)
+        res.status(401).render('unauthorized')
     }
     }
     
     
 })
-router.get('/:id/delete', async (req,res) => {
+router.get('/:id/delete', forceAuthorize, async (req,res) => {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.render('not-found')
+        return
+    }
+    const doesIdExist = await CommentsModel.exists({ _id: req.params.id });
+    if(doesIdExist === null) {
+        res.render('not-found')
+        return
+    }
     const comment = await CommentsModel.findById(req.params.id)
     if(res.locals.fullName) {
         const result = await utils.checkAuthorUsername(res.locals.fullName, comment.author)
@@ -177,7 +230,7 @@ router.get('/:id/delete', async (req,res) => {
         res.redirect('/comments')
     }
     else {
-        res.sendStatus(403)
+        res.status(401).render('unauthorized')
     }
     }
     else {
@@ -189,7 +242,7 @@ router.get('/:id/delete', async (req,res) => {
         res.redirect('/comments')
     }
     else {
-        res.sendStatus(403)
+        res.status(401).render('unauthorized')
     }
     }
     
