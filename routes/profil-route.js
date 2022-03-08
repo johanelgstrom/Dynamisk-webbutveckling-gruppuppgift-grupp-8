@@ -18,7 +18,7 @@ const forceAuthorize = (req, res, next) => {
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     next();
   } else {
-    res.redirect("/");
+    res.send(401).render('unauthorized')
   }
 };
 

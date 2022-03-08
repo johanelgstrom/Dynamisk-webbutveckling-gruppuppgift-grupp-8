@@ -2,7 +2,6 @@ const express = require("express");
 const utils = require("../utils.js");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const { ObjectId } = require("mongodb");
 const UsersModel = require("../models/UsersModels.js");
 const postsModel = require("../models/postsModel");
 const GoogleModel = require("../models/GoogleModels");
@@ -20,7 +19,7 @@ const forceAuthorize = (req, res, next) => {
   ) {
     next();
   } else {
-    res.redirect("/");
+    res.status(401).render('unauthorized')
   }
 };
 //!Om man inte är inloggad
@@ -69,7 +68,7 @@ router.post("/posts", forceAuthorize, async (req, res) => {
       res.cookie("token", accessToken);
       res.redirect("/posts");
     } else {
-      res.redirect("/");
+      res.render('unauthorized')
     }
   });
 });
