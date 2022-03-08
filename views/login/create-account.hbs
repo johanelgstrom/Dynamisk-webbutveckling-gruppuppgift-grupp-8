@@ -1,21 +1,48 @@
-<div class="loginmaincontainer">
-  <div class="loginheader">
-    <h1>TravelStories</h1>
-    <h3>Share your travels with the world</h3>
-  </div>
-</div>
+<div class="notloggedinbody">
 
-<div class="registercontainer">
-  <form class="registerform" action="/register" method="post">
-    <input type="text" name="fullName" placeholder="First and last name" />
-    <input type="text" name="username" placeholder="Username" />
-    <input type="password" name="password" placeholder="Password" />
-    <input
-      type="password"
-      name="confirmPassword"
-      placeholder="Password again"
+  <div class="notloggedinlogocontainer">
+    <img
+      class="travelstories-logo"
+      src="/images/TravelStories-logga-slogan.png"
+      alt="TravelStories logo"
     />
+  </div>
 
-    <input type="submit" value="Create account" />
-  </form>
+  <div class="centercontainer centerlogin">
+    <div class="loginpage createaccounttext">
+      Fill in the information below to create an account
+    </div>
+    <form class="registerform" action="/register" method="post">
+      <input
+        class="logininput loginpage"
+        type="text"
+        name="fullName"
+        placeholder="First and last name"
+      />
+      <input
+        class="logininput loginpage"
+        type="text"
+        name="username"
+        placeholder="Username"
+      />
+      <input
+        class="logininput loginpage"
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+      <input
+        class="logininput loginpage"
+        type="password"
+        name="confirmPassword"
+        placeholder="Password again"
+      />
+
+      <input
+        class="loginbtn generealbtn loginpage"
+        type="submit"
+        value="Create account"
+      />
+    </form>
+  </div>
 </div>
