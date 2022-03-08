@@ -92,7 +92,8 @@ router.get("/create-account", ifLoggedIn, (req, res) => {
 router.post("/register", async (req, res) => {
   const { fullName, username, password, confirmPassword } = req.body;
 
-  UsersModel.findOne({ username, fullName }, async (err, user) => {
+  // Kolla om man kan skapa en användare med samma användarnamn om man använder ett nytt fullName
+  UsersModel.findOne({ username }, async (err, user) => {
     if (user) {
       res.send("Username already exists");
     } else if (password !== confirmPassword) {
