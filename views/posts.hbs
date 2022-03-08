@@ -34,6 +34,11 @@
         <textarea name="comment" id="" cols="30" rows="10" required></textarea>
         <input type="submit" value="Post comment" />
       </form>
+      {{#if likes}}
+        <p>Likes: {{likes.length}}</p>
+      {{else}}
+        <p>Likes: 0</p>
+      {{/if}}
     </article>
   {{/each}}
 </div>

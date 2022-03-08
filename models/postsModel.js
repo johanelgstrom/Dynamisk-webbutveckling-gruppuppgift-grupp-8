@@ -15,6 +15,7 @@ const articlesSchema = new mongoose.Schema({
   imgUrl: { type: String, required: true },
   content: String,
   country: { type: String, required: true },
+  likes: Array,
 });
 
 const postsModel = mongoose.model("posts", articlesSchema);

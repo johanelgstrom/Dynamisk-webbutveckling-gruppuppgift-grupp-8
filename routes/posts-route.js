@@ -9,6 +9,7 @@ const { getUniqueFilename } = require("../utils");
 const router = express.Router();
 const fileupload = require("express-fileupload");
 const jwt = require("jsonwebtoken");
+const utils = require('../utils.js')
 
 const forceAuthorize = (req, res, next) => {
   const { token } = req.cookies;
@@ -41,7 +42,7 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
   await image.mv(uploadpath);
   if (res.locals.fullName) {
     const newArticle = new postsModel({
-      author: res.locals.user,
+      author: res.locals.fullName,
       postedBy: res.locals.userID,
       title: req.body.title,
       imageName: req.body.imageName,
@@ -53,8 +54,9 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
     res.redirect("read-post/" + result._id);
     // console.log(newArticle);
   } else {
+    const loginInfo = res.locals.loginInfo
     const newArticle = new postsModel({
-      author: res.locals.user,
+      author: loginInfo,
       postedBy: res.locals.userID,
       title: req.body.title,
       imageName: req.body.imageName,
@@ -70,9 +72,80 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
 
 router.get("/read-post/:id", forceAuthorize, async (req, res) => {
   const article = await postsModel.findById(req.params.id).lean();
-  res.render("read-post", article);
+  let result = false
+  let validAuthor = false
+    if(res.locals.fullName) {
+        result = await utils.checkIfLiked(res.locals.fullName, req.params.id, postsModel)
+        validAuthor = await utils.checkAuthorUsername(res.locals.fullName, article.author)
+    }
+    else {
+        result = await utils.checkIfLiked(res.locals.loginInfo, req.params.id, postsModel)
+        validAuthor = await utils.checkAuthorUsername(res.locals.loginInfo, article.author)
+    }
+    
+    if(validAuthor === true) {
+        if (result == true) {
+            res.render("read-post", {article, result, validAuthor});
+        }
+        else {
+            res.render("read-post", {article, validAuthor});
+        }
+    }
+    else {
+        if (result == true) {
+            res.render("read-post", {article, result});
+        }
+        else {
+            res.render("read-post", {article});
+        }
+    }
 });
 
+router.get('/read-post/:id/like', forceAuthorize, async (req,res) => {
+  const post = await postsModel.findById(req.params.id).lean()
+    // console.log(res.locals.fullName);
+    if(res.locals.fullName) {
+        await postsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.fullName}})
+    }
+    else {
+        await postsModel.updateOne({_id: req.params.id}, { $push: {likes: res.locals.loginInfo}})
+    }
+    
+    res.redirect(`/posts/read-post/${req.params.id}`)
+})
+
+router.get('/read-post/:id/unlike', forceAuthorize, async (req,res) => {
+  const post = await postsModel.findById(req.params.id).lean()
+    
+    if(res.locals.fullName) {
+        const user = res.locals.fullName
+            for (let i = 0; i < post.likes.length; i++) {
+
+                if(post.likes[i] === res.locals.fullName) {
+                    const result = await utils.checkAuthorUsername(res.locals.fullName, post.likes[i])
+                    if(result === true) {
+                        await postsModel.updateOne({_id: req.params.id}, { $pull: {likes: res.locals.fullName}})
+                    res.redirect(`/posts/read-post/${req.params.id}`)
+                    }
+                    
+                }
+            }
+    }
+    else {
+        const user = res.locals.loginInfo
+            for (let i = 0; i < post.likes.length; i++) {
+
+                if(post.likes[i] === res.locals.loginInfo) {
+                    const result = await utils.checkAuthorUsername(res.locals.loginInfo, post.likes[i])
+                    if(result === true) {
+                        await postsModel.updateOne({_id: req.params.id}, { $pull: {likes: res.locals.loginInfo}})
+                    res.redirect(`/posts/read-post/${req.params.id}`)
+                    }
+                    
+                }
+            }
+    }
+})
 router.post("/:id/comment", forceAuthorize, async (req, res) => {
   const post = await postsModel.findById(req.params.id).lean();
   // console.log(res.locals);
