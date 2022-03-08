@@ -52,7 +52,7 @@ app.use((req, res, next) => {
     res.locals.user = tokenData.username;
     res.locals.userID = tokenData.userId;
 
-    console.log(tokenData);
+    // console.log(tokenData);
   } else {
     res.locals.loggedIn = false;
   }
