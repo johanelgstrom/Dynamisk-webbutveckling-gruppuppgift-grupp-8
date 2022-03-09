@@ -1,4 +1,21 @@
-<h2>You're not allowed to be in here</h2>
-<div class="401-link-container">
-<a href="/">Back to login </a><p>or </p><a href="/create-account">create an account</a>
+<div class="loggedinlogocontainer">
+
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
+
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
+
+<div class="error-container">
+    <h2>Don't try to edit someone else's content, you're not allowed to be here</h2>
+    <p>Error code <b>401</b></p> 
+
+    {{#if loggedIn}}
+      <a href="/posts" class="error-btn">Back to posts</a>
+    {{else}}
+      <a href="/" class="error-btn">Back to login</a>
+    {{/if}}
 </div>
