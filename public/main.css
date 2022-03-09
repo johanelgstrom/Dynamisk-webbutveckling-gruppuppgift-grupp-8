@@ -41,6 +41,7 @@ a {
 
 .onlytextalign {
   text-align: center;
+  color: rgba(93, 113, 107);
 }
 
 .centerbtn,
@@ -274,8 +275,8 @@ input[type="file"] {
   padding: 10px 5 10px 5;
   margin-right: 10px;
   border-radius: 5px;
-  border: 1px solid rgba(93, 113, 107);
-  background-color: rgba(255, 255, 255, 0);
+  border: 0.5px solid rgba(93, 113, 107);
+  background-color: #fef7ea;
   color: black;
   cursor: pointer;
 }
@@ -291,6 +292,30 @@ input[type="file"] {
   transform: scale(1);
 }
 
+.choosecountry {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.choosecountrybtn {
+  padding: 10px 5 10px 5;
+  margin: 0 0 25px 10px;
+  border-radius: 5px;
+  border: 0.5px solid rgba(93, 113, 107);
+  background-color: #fef7ea;
+  color: black;
+  cursor: pointer;
+  width: 48%;
+  margin-bottom: 25px;
+}
+
+.choosecountrybtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+
 .poststext {
   margin-top: 30px;
   font-size: 1.2rem;
@@ -300,7 +325,7 @@ input[type="file"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 20px 10px 20px 10px;
+  margin: 40px 10px 20px 10px;
 }
 .post-bildcontainer {
   display: flex;
@@ -316,11 +341,12 @@ input[type="file"] {
 .postcontainer {
   box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.25);
   width: 48%;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border-radius: 5px;
   height: fit-content;
   background-color: #fefbf5;
   position: relative;
+  z-index: 99;
 }
 
 .postcontainer:hover {
@@ -419,8 +445,10 @@ input[type="file"] {
   }
 
   .logoutbtn {
-    margin-right: 40px;
+    margin-right: 20px;
     padding: 10px;
+    border: 0.5px solid rgba(93, 113, 107);
+    background-color: #fef7ea;
   }
 
   .newposttext {
@@ -437,14 +465,19 @@ input[type="file"] {
 
   .createpostbtn {
     width: 20%;
-    margin: 0 40px 0 0;
+    margin: 0 20px 0 0;
   }
 
   .postflowcontainer {
-    margin: 20px 40px 20px 40px;
+    margin: 20px 20px 20px 20px;
   }
 
   .postcontainer {
-    max-width: 22.8%;
+    max-width: 19%;
+  }
+
+  .choosecountrybtn {
+    margin: 0 0 25px 20px;
+    width: 19%;
   }
 }

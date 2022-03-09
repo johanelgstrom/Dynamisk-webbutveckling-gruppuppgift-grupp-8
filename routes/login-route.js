@@ -143,6 +143,10 @@ router.get(
 
       if (user) {
         userData.id = user._id;
+        const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+        res.cookie("token", accessToken);
+        res.redirect("/posts");
       } else {
         const newUser = new GoogleModel({
           googleId: req.user.id,
@@ -151,12 +155,11 @@ router.get(
         });
         const result = await newUser.save();
         userData.id = result._id;
+        const accessToken = jwt.sign(userData, process.env.JWTSECRET);
+
+        res.cookie("token", accessToken);
+        res.redirect("/posts");
       }
-
-      const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-
-      res.cookie("token", accessToken);
-      res.redirect("/posts");
     });
   }
 );
