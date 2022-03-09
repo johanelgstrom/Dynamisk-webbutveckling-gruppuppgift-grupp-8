@@ -2,39 +2,398 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
-.loginmaincontainer {
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.notloggedinbody {
+  background-color: #fefbf5;
+  height: 100vh;
+}
+
+.notloggedinlogocontainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+}
+
+.travelstories-logo {
+  width: 60%;
+}
+
+.centercontainer {
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20%;
 }
 
-.loginheader {
+.textalign {
+  text-align: center;
+  margin: 20px 0 20px 0;
+}
+
+.onlytextalign {
+  text-align: center;
+  color: rgba(93, 113, 107);
+}
+
+.centerbtn,
+.loginformcontainer,
+.registerform,
+.createaccounttext,
+.newposttext,
+.newpostform {
+  width: 60%;
+}
+
+.generealbtn,
+.googleloginbtn,
+.logininput {
   width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(93, 113, 107);
+  background-color: rgba(255, 255, 255, 0);
+  color: black;
+  cursor: pointer;
+}
+
+.generealbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.generealbtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.greenbtn {
+  background-color: rgba(93, 113, 107, 0.53);
+}
+
+/*Login page*/
+.loginformcontainer,
+.registerform {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.forgotorcreatecontainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.loginpage {
+  margin-top: 20px;
+}
+.loginbtn {
+  color: black;
+  width: 100%;
 }
 
-.registercontainer {
+.googleloginbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleloginbtn > a {
+  margin-left: 5px;
+}
+
+.fa-google {
+  background: conic-gradient(
+      from -45deg,
+      #ea4335 110deg,
+      #4285f4 90deg 180deg,
+      #34a853 180deg 270deg,
+      #fbbc05 270deg
+    )
+    73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/*Skapa konto*/
+.createaccounttext,
+.newposttext {
+  text-align: center;
+}
+
+/*Skapa post*/
+.loggedinlogocontainer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.travelstories-logo-loggedin {
+  width: 40%;
+}
+
+.travelstories-logo-loggedin {
+  margin-left: 10px;
+}
+
+.logoutbtn {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(93, 113, 107);
+  background-color: rgba(255, 255, 255, 0);
+  color: black;
+  cursor: pointer;
+}
+
+.logoutbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.logoutbtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.newposttext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(93, 113, 107);
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+.newposttitle {
+  border: none;
+  border-bottom: 1px solid #5d716b;
+  width: 100%;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0);
+  color: black;
+}
+
+.newposttitle::placeholder {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
+.newpostform {
+  width: 80%;
+}
+.newpostcontent {
+  width: 100%;
+  height: 40vh;
+  resize: none;
+  border-radius: 5px;
+}
+
+.newpostcontent::placeholder {
+  position: absolute;
+  left: 5%;
+  top: 2%;
+}
+
+.addimg {
+  width: 100%;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.custom-file-upload {
+  border: 1px solid #5d716b;
+  display: inline-block;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(93, 113, 107);
+  background-color: rgba(255, 255, 255, 0);
+  width: 100%;
+  margin-top: 20px;
+  color: black;
+  text-align: center;
+}
+
+/*Flödet*/
+.loggedinascontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.usercontainer {
+  display: flex;
+  align-items: center;
+  width: 75%;
+}
+
+.traveltext {
+  background-color: rgba(93, 113, 107, 0.28);
+  text-align: center;
+  padding: 10px 5 10px 5;
+}
+
+.profillink {
+  background-color: #fef7ea;
+  text-align: center;
+  border-radius: 0 5px 5px 0;
+  padding: 10px 5 10px 5;
+}
+
+.profillink:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+
+.profillink:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.createpostbtn {
+  padding: 10px 5 10px 5;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 0.5px solid rgba(93, 113, 107);
+  background-color: #fef7ea;
+  color: black;
+  cursor: pointer;
+}
+
+.createpostbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.createpostbtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.choosecountry {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.registerform {
+.choosecountrybtn {
+  padding: 10px 5 10px 5;
+  margin: 0 0 25px 10px;
+  border-radius: 5px;
+  border: 0.5px solid rgba(93, 113, 107);
+  background-color: #fef7ea;
+  color: black;
+  cursor: pointer;
+  width: 48%;
+  margin-bottom: 25px;
+}
+
+.choosecountrybtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+
+.poststext {
+  margin-top: 30px;
+  font-size: 1.2rem;
+}
+
+.postflowcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 40px 10px 20px 10px;
+}
+.post-bildcontainer {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.post-bild {
+  object-fit: cover;
+}
+
+.postcontainer {
+  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.25);
+  width: 48%;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  height: fit-content;
+  background-color: #fefbf5;
+  position: relative;
+  z-index: 99;
+}
+
+.postcontainer:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+
+.postedby,
+.post-date {
+  font-size: 0.6rem;
+}
+
+.postcountry {
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 101%;
+}
+
+.titlecontainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 10px 0;
+}
+
+.titlecontainer > a {
+  font-size: 1.3rem;
+  text-align: center;
+}
+.postcardgenerel {
+  margin-left: 10px;
+}
+
+.likes {
+  margin: 10px 0 10px 10px;
+}
+
+.underpostimg {
+  background-color: #fefbf5;
+}
+
+.postedby {
+  margin: 0 0 0 10px;
 }
 
 /* STYLING FÖR TESTER */
-.comments-border-test {
+/* .comments-border-test {
   border: 1px solid black;
 }
 
@@ -47,11 +406,78 @@
 .post-bildcontainer {
   width: 80%;
   height: 100px;
-  /* margin: 0 auto; */
-}
+  margin: 0 auto; */
+/* }
 
 .post-bild {
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
+} */
+
+@media only screen and (min-width: 1024px) {
+  .notloggedinlogocontainer {
+    height: 40%;
+  }
+  .centerbtn {
+    width: 33%;
+  }
+
+  .generealbtn {
+    font-size: 1.2rem;
+  }
+
+  .loginformcontainer,
+  .registerform {
+    width: 33%;
+  }
+
+  .loggedinlogocontainer {
+    height: 100px;
+  }
+
+  .travelstories-logo-loggedin {
+    width: 20%;
+  }
+
+  .travelstories-logo-loggedin {
+    margin-left: 10px;
+  }
+
+  .logoutbtn {
+    margin-right: 20px;
+    padding: 10px;
+    border: 0.5px solid rgba(93, 113, 107);
+    background-color: #fef7ea;
+  }
+
+  .newposttext {
+    font-size: 2rem;
+  }
+
+  .newpostform {
+    width: 33%;
+  }
+
+  .loggedinascontainer {
+    width: 100%;
+  }
+
+  .createpostbtn {
+    width: 20%;
+    margin: 0 20px 0 0;
+  }
+
+  .postflowcontainer {
+    margin: 20px 20px 20px 20px;
+  }
+
+  .postcontainer {
+    max-width: 19%;
+  }
+
+  .choosecountrybtn {
+    margin: 0 0 25px 20px;
+    width: 19%;
+  }
 }

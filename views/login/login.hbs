@@ -7,20 +7,10 @@
       alt="TravelStories logo"
     />
   </div>
-
   <div class="centercontainer centerlogin">
-    <div class="loginpage createaccounttext">
-      Fill in the information below to create an account
-    </div>
-    <form class="registerform" action="/register" method="post">
+    <form class="loginformcontainer" action="/posts" method="post">
       <input
-        class="logininput loginpage"
-        type="text"
-        name="fullName"
-        placeholder="First and last name"
-      />
-      <input
-        class="logininput loginpage"
+        class="logininput"
         type="text"
         name="username"
         placeholder="Username"
@@ -32,17 +22,27 @@
         placeholder="Password"
       />
       <input
-        class="logininput loginpage"
-        type="password"
-        name="confirmPassword"
-        placeholder="Password again"
-      />
-
-      <input
         class="loginbtn generealbtn loginpage"
         type="submit"
-        value="Create account"
+        value="Login"
       />
+
+      <div class="loginpage">OR</div>
+
+      <button class="googleloginbtn loginpage generealbtn">
+        <i class="fab fa-google"></i>
+        <a href="/google">Login with Google</a>
+      </button>
     </form>
+
+    {{! <div class="forgotorcreatecontainer">
+      <div class="forgotorcreate">Or</div>
+      <div class="forgotorcreate">
+        <button>
+            <a href="/google"><i class="fab fa-google fa-3x"></i>Login with Google</a>
+        </button>
+      </div>
+    </div> }}
+
   </div>
 </div>
