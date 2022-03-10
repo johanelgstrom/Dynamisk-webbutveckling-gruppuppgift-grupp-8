@@ -1,5 +1,32 @@
-<h2>delete post: {{title}}</h2>
+<div class="loggedinlogocontainer">
 
-<form action="/posts/{{_id}}/delete" method="post">
-<input type="submit" value="delete">
-</form>
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
+
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
+
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
+    </div>
+  </div>
+
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
+
+<div class="editposttext">
+  Click on the button below to delete this story</div>
+
+<div class="deleteformbtn">
+  <form action="/posts/{{_id}}/delete" method="post">
+    <input type="submit" value="Delete story" />
+  </form>
+</div>
