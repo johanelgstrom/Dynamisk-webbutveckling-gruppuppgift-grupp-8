@@ -61,6 +61,21 @@
     {{/if}}
   </div>
 </div>
+{{#if article.comments}}
+  {{#each article.comments}}
+    <div class="comment-container">
+      <span class="postedby">By {{author}}</span>
+      <p>{{description}}</p>
+      <p>{{formateDate time}}</p>
+      {{#if likes}}
+        <a href="/comments/{{_id}}"><p>Likes:
+            {{likes.length}}</p></a>
+      {{else}}
+        <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
+      {{/if}}
+    </div>
+  {{/each}}
+{{/if}}
 <div class="commentpostcontainer">
   <div class="commentpostformcontainer">
     <form
@@ -79,7 +94,7 @@
   </div>
 </div>
 
-{{#each comments}}
+{{!-- {{#each comments}}
   <div class="comments-border-test">
     <p><a href="/comments/{{_id}}">Post ID: {{_id}}</a></p>
     <p>Comment on <a href="/posts/read-post/{{postId}}">{{postId}}</a></p>
@@ -93,20 +108,5 @@
     {{/if}}
 
   </div>
-{{/each}}
+{{/each}} --}}
 
-{{#if article.comments}}
-  {{#each comments}}
-    <div class="comment-container">
-      <span class="postedby">By {{author}}</span>
-      <p>{{description}}</p>
-      <p>{{formateDate time}}</p>
-      {{#if likes}}
-        <a href="/comments/{{article._id}}"><p>Likes:
-            {{likes.length}}</p></a>
-      {{else}}
-        <a href="/comments/{{article._id}}"><p>Likes: 0</p></a>
-      {{/if}}
-    </div>
-  {{/each}}
-{{/if}}
