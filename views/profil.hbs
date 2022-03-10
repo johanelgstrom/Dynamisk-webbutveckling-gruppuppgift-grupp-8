@@ -1,38 +1,49 @@
-<a href="/logout">Log out</a>
+<div class="loggedinlogocontainer">
 
-<h3>Logged in as {{fullName}} {{loginInfo}}</h3>
-{{!-- <a href="/profil/{{_id}}"> {{user.username}} {{loginInfo}}</a></h3> --}}
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
 
-<h2>My travel stories</h2>
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
 
-<div class="postcontainer">
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
+    </div>
+  </div>
 
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
 
+<div class="onlytextalign poststextprofil">My travel stories</div>
+<div class="postflowcontainer">
+  {{#each articles}}
 
-  {{#each articles}} 
-
-      <article>
-        <h3>{{title}}</h3>
-        <div class="post-bildcontainer">
-          <img class="post-bild" src="{{imgUrl}}" /></div>
-        <p class="post-date">{{formateDate time}}</p>
-        <p><a href="/posts/read-post/{{_id}}">read post</a></p>
-        {{#if comments}}
-          {{#each comments}}
-            <div class="comment-container">
-              <p>Posted by {{author}}</p>
-              <p>{{description}}</p>
-              <p>{{formateDate time}}</p>
-              {{#if likes}}
-                <a href="/comments/{{_id}}"><p>Likes: {{likes.length}}</p></a>
-              {{else}}
-                <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
-              {{/if}}
-            </div>
-          {{/each}}
-
+    <article class="postcontainer">
+      <div class="postcountry">{{country}}</div>
+      <div class="post-bildcontainer">
+        <img class="post-bild" src="{{imgUrl}}" />
+      </div>
+      <div class="underpostimg">
+        <a class="postedby" href="/posts/{{_id}}/edit">Edit post ✎</a>
+        {{!-- <span class="post-date">{{formateDate}}</span> --}}
+        <div class="titlecontainer">
+          <a href="/posts/read-post/{{_id}}">{{title}}</a>
+        </div>
+        {{#if likes}}
+          <a href="/{{_id}}/like"><p class="postcardgenerel likes">Likes:
+              {{likes.length}}</p></a>
+        {{else}}
+          <a href="/comments/{{_id}}"><p class="postcardgenerel likes">Likes: 0</p></a>
         {{/if}}
-
-    {{/each}}
-
+      </div>
+    </article>
+  {{/each}}
 </div>

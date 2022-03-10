@@ -19,7 +19,7 @@ const forceAuthorize = (req, res, next) => {
   ) {
     next();
   } else {
-    res.status(401).render('unauthorized')
+    res.status(401).render("unauthorized");
   }
 };
 //!Om man inte är inloggad
@@ -72,7 +72,7 @@ router.post("/posts", forceAuthorize, async (req, res) => {
       res.cookie("token", accessToken);
       res.redirect("/posts");
     } else {
-      res.render('unauthorized')
+      res.render("unauthorized");
     }
   });
 });
@@ -109,7 +109,7 @@ router.post("/register", async (req, res) => {
       });
 
       await newUser.save();
-      res.redirect("/posts");
+      res.redirect("/");
 
       //   res.sendStatus(200);
     }
@@ -137,17 +137,17 @@ router.get(
       .find()
       .sort([["time", "desc"]])
       .lean();
-    GoogleModel.findOne({ googleId: req.user.id }, async (err, user) => {
+    UsersModel.findOne({ googleId: req.user.id }, async (err, user) => {
       const userData = { displayName: req.user.displayName };
 
       if (user) {
-        userData.id = user._id;
+        userData.userId = user._id;
         const accessToken = jwt.sign(userData, process.env.JWTSECRET);
 
         res.cookie("token", accessToken);
         res.redirect("/posts");
       } else {
-        const newUser = new GoogleModel({
+        const newUser = new UsersModel({
           googleId: req.user.id,
           displayName: req.user.displayName,
           postedBy: userData,

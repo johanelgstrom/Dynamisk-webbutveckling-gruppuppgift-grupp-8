@@ -300,7 +300,7 @@ input[type="file"] {
 
 .choosecountrybtn {
   padding: 10px 5 10px 5;
-  margin: 0 0 25px 10px;
+  margin: 25px 0 25px 10px;
   border-radius: 5px;
   border: 0.5px solid rgba(93, 113, 107);
   background-color: #fef7ea;
@@ -321,32 +321,34 @@ input[type="file"] {
   font-size: 1.2rem;
 }
 
+.poststextprofil {
+  margin: 30px 0 30px 0;
+  font-size: 1.2rem;
+}
+
 .postflowcontainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 40px 10px 20px 10px;
 }
-.post-bildcontainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.post-bild {
-  object-fit: cover;
-}
 
 .postcontainer {
   box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.25);
   width: 48%;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   border-radius: 5px;
   height: fit-content;
   background-color: #fefbf5;
   position: relative;
   z-index: 99;
+}
+.post-bildcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .postcontainer:hover {
@@ -390,6 +392,249 @@ input[type="file"] {
 
 .postedby {
   margin: 0 0 0 10px;
+}
+
+/*Läs post*/
+.readcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.readpostcontainer {
+  margin: 30px 10px 0px 10px;
+  border-radius: 5px;
+  background-color: #fefbf5;
+  box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.post-bild {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.like {
+  width: 100px;
+}
+
+.bi-heart {
+  color: red;
+  margin: 0 0 15px 5px;
+}
+
+.readpostbtncontainer {
+  width: 100%;
+}
+
+.readpostbtn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.goback,
+.unlikebtn,
+.likebtn {
+  border: 0.5px solid rgba(93, 113, 107);
+  text-align: center;
+  padding: 15px 30px;
+  width: 49.5%;
+  border-radius: 5px;
+  margin: 10px 10px;
+  background-color: white;
+}
+
+.goback:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.05);
+}
+.goback:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+.unlikebtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.05);
+}
+.unlikebtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+.likebtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.05);
+}
+.likebtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.commentpostformcontainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.commentform {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 10px;
+}
+
+.commenttextarea,
+.submitcommentbtn {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.commenttextarea {
+  resize: none;
+  padding: 5px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.submitcommentbtn {
+  border: 0.5px solid rgba(93, 113, 107);
+  text-align: center;
+  padding: 15px 30px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.submitcommentbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.submitcommentbtn:active {
+  transition-timing-function: ease-in;
+  transform: scale(1);
+}
+
+.editdeletebtn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.editbtn {
+  margin: 0 0 0 5px;
+}
+
+.deletebtn {
+  margin: 0 5px 0 0;
+}
+
+.editbtn,
+.deletebtn {
+  padding: 5px;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 0.5px solid rgba(93, 113, 107);
+  background-color: #fef7ea;
+  color: black;
+  cursor: pointer;
+}
+
+.editbtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.editbtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+.deletebtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+.deletebtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+/* Edit post*/
+.editposttext {
+  text-align: center;
+  margin-top: 30px;
+  color: rgba(93, 113, 107);
+  font-size: 1.3rem;
+}
+
+.editpostform {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editform {
+  margin-bottom: -20px;
+  resize: none;
+}
+
+.edittextarea {
+  height: 33vh;
+}
+
+.editsavebtn {
+  background-color: #fef7ea;
+}
+.editsavebtn:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
+
+.editsavebtn:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.deletetext {
+  text-align: center;
+}
+
+.deleteformbtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.deleteformbtn > form > input {
+  background-color: #fef7ea;
+  border: 0.5px solid rgba(93, 113, 107);
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.deleteformbtn > form > input:hover {
+  transition-timing-function: ease-out;
+  transition: 0.2s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.deleteformbtn > form > input:active {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: scale(1);
 }
 
 /* STYLING FÖR TESTER */
@@ -471,13 +716,53 @@ input[type="file"] {
   .postflowcontainer {
     margin: 20px 20px 20px 20px;
   }
-
   .postcontainer {
     max-width: 19%;
+    flex-grow: 1;
   }
 
   .choosecountrybtn {
-    margin: 0 0 25px 20px;
+    margin: 40px 0 25px 20px;
     width: 19%;
+  }
+
+  .poststextprofil {
+    margin: 30px 0 60px 0;
+    font-size: 1.3rem;
+  }
+
+  .readpostcontainer {
+    margin: none;
+    border-radius: 5px;
+    width: 40%;
+  }
+
+  .readpostbtncontainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .readpostbtn {
+    width: 40%;
+    justify-content: center;
+  }
+
+  .goback,
+  .unlikebtn,
+  .likebtn {
+    width: 45%;
+    border-radius: 5px;
+    margin: 10px 5px;
+  }
+
+  .commentpostcontainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .commentpostformcontainer {
+    width: 38%;
   }
 }
