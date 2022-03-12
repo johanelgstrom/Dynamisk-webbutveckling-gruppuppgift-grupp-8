@@ -81,6 +81,16 @@ a {
 }
 
 /*Login page*/
+
+.successcreateaccount {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: rgba(93, 113, 107);
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
 .loginformcontainer,
 .registerform {
   display: flex;
@@ -125,6 +135,7 @@ a {
 .createaccounttext,
 .newposttext {
   text-align: center;
+  color: rgba(93, 113, 107);
 }
 
 /*Skapa post*/

@@ -109,9 +109,7 @@ router.post("/register", async (req, res) => {
       });
 
       await newUser.save();
-      res.redirect("/");
-
-      //   res.sendStatus(200);
+      res.render("login/login", { newUser });
     }
   });
 });
