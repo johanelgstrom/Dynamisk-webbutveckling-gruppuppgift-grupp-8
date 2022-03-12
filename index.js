@@ -53,6 +53,7 @@ app.use((req, res, next) => {
     res.locals.loginInfo = tokenData.displayName;
     res.locals.user = tokenData.username;
     res.locals.userID = tokenData.userId;
+
     // res.locals.userIDGoogle = tokenData.userId;
 
     // console.log(tokenData);
