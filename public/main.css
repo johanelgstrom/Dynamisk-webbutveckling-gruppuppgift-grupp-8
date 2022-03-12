@@ -210,28 +210,26 @@ a {
   width: 100%;
 }
 
-input[type="file"] {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+.addimgbtn {
+  border: none;
 }
+
+input[type="file"] {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  color: black;
+}
+
 .custom-file-upload {
-  border: 1px solid #5d716b;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   cursor: pointer;
   padding: 15px;
   border-radius: 5px;
   border: 1px solid rgba(93, 113, 107);
   background-color: rgba(255, 255, 255, 0);
-  width: 100%;
   margin-top: 20px;
-  color: black;
-  text-align: center;
 }
 
 /*Flödet*/
