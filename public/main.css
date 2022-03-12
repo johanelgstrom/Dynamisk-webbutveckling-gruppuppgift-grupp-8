@@ -147,10 +147,12 @@ a {
   margin-right: 10px;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid rgba(93, 113, 107);
+  border: 0.5px solid rgba(93, 113, 107);
   background-color: rgba(255, 255, 255, 0);
   color: black;
   cursor: pointer;
+  background-color: #fef7ea;
+  width: 80px;
 }
 
 .logoutbtn:hover {
@@ -409,16 +411,19 @@ input[type="file"] {
 
 .post-bild {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
 .like {
   width: 100px;
 }
 
+.likeheart {
+  margin: 0 0 15px 5px;
+}
+
 .bi-heart {
   color: red;
-  margin: 0 0 15px 5px;
 }
 
 .readpostbtncontainer {
@@ -522,7 +527,7 @@ input[type="file"] {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .editbtn {
@@ -637,28 +642,12 @@ input[type="file"] {
   transform: scale(1);
 }
 
-/* STYLING FÖR TESTER */
-/* .comments-border-test {
-  border: 1px solid black;
+.titlecontentcontainer {
+  margin: 15px 0 15px 5px;
 }
-
-.postcontainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.titlecontentcontainer > h2 {
+  margin-bottom: 5px;
 }
-
-.post-bildcontainer {
-  width: 80%;
-  height: 100px;
-  margin: 0 auto; */
-/* }
-
-.post-bild {
-  object-fit: cover;
-  max-width: 100%;
-  max-height: 100%;
-} */
 
 @media only screen and (min-width: 1024px) {
   .notloggedinlogocontainer {
@@ -691,9 +680,8 @@ input[type="file"] {
 
   .logoutbtn {
     margin-right: 20px;
+    width: 90px;
     padding: 10px;
-    border: 0.5px solid rgba(93, 113, 107);
-    background-color: #fef7ea;
   }
 
   .newposttext {

@@ -1,12 +1,13 @@
 <div class="loggedinlogocontainer">
 
-  <img
-    class="travelstories-logo-loggedin"
-    src="/images/TravelStories-logga-ingen-slogan.png"
-    alt="TravelStories logo"
-  />
+  <a href="/"><img
+      class="travelstories-logo-loggedin"
+      src="/images/TravelStories-logga-ingen-slogan.png"
+      alt="TravelStories logo"
+    />
+  </a>
 
-  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+  <a href="/logout"><button class="logoutbtn">Log out</button></a>
 </div>
 
 <div class="loggedinascontainer">
@@ -27,18 +28,21 @@
       <img class="post-bild" src="{{article.imgUrl}}" />
     </div>
 
-    <p>{{article.content}}</p>
     {{#if validAuthor}}
       <div class="editdeletebtn">
         <a class="editbtn" href="/posts/{{article._id}}/edit">Edit post ✎</a>
         <a class="deletebtn" href="/posts/{{article._id}}/delete">Delete story 🗑</a>
       </div>
     {{/if}}
+    <div class="titlecontentcontainer">
+      <h2>{{article.title}}</h2>
+      <div>{{article.content}}</div>
+    </div>
     {{#if article.likes}}
-      <p><i class="bi bi-heart"></i>
+      <p class="likeheart"><i class="bi bi-heart"></i>
         {{article.likes.length}}</p>
     {{else}}
-      <p><i class="bi bi-heart"></i>
+      <p class="likeheart"><i class="bi bi-heart"></i>
         0</p>
     {{/if}}
 
