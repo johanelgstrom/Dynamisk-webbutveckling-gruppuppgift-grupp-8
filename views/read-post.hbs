@@ -65,21 +65,44 @@
     {{/if}}
   </div>
 </div>
-{{#if article.comments}}
-  {{#each article.comments}}
-    <div class="comment-container">
-      <span class="postedby">By {{author}}</span>
-      <p>{{description}}</p>
-      <p>{{formateDate time}}</p>
-      {{#if likes}}
-        <a href="/comments/{{_id}}"><p>Likes:
-            {{likes.length}}</p></a>
-      {{else}}
-        <a href="/comments/{{_id}}"><p>Likes: 0</p></a>
-      {{/if}}
-    </div>
-  {{/each}}
-{{/if}}
+<div class="commentflexcontainer">
+  <div class="commentcontainer">
+    {{#if article.comments}}
+      {{#each article.comments}}
+        <div class="commenttextcontainer">
+          <span class="postedby">Posted by
+            {{author}}
+            {{formateDate time}}</span>
+          <div class="commenttext">{{description}}</div>
+          <div class="likecommentcontainer">
+            {{#if likes}}
+              <a class="commentlike" href="/comments/{{_id}}"><i
+                  class="bi bi-heart"
+                ></i>
+                {{likes.length}}</a>
+            {{else}}
+              <a class="commentlike" href="/comments/{{_id}}">
+                <i class="bi bi-heart"></i>
+                0</a>
+            {{/if}}
+            {{#if result}}
+              <a
+                class="unlikebtncomment"
+                href="/comments/{{comment._id}}/unlike"
+              ><i class="bi bi-hand-thumbs-down"></i>
+                this comment</a>
+            {{else}}
+              <a class="likebtncomment" href="/comments/{{comment._id}}/like"><i
+                  class="bi bi-hand-thumbs-up"
+                ></i>
+                this comment</a>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>
 <div class="commentpostcontainer">
   <div class="commentpostformcontainer">
     <form
@@ -113,4 +136,3 @@
 
   </div>
 {{/each}} --}}
-
