@@ -240,7 +240,6 @@
       </div>
       <div class="underpostimg">
         <span class="postedby">By {{author}}</span>
-        {{!-- <span class="post-date">{{formateDate}}</span> --}}
         <div class="titlecontainer">
           <a href="/posts/read-post/{{_id}}">{{title}}</a>
         </div>
@@ -254,21 +253,3 @@
     </article>
   {{/each}}
 </div>
-{{!-- {{#if comments}}
-        {{#each comments}}
-          <div class="comment-container">
-            <p>{{description}}</p>
-            <p>{{formateDate time}}</p>
-          </div>
-        {{/each}}
-
-      {{/if}} --}}
-{{!-- <form action="/posts/{{_id}}/comment" method="post">
-        <textarea name="comment" id="" cols="30" rows="10" required></textarea>
-        <input type="submit" value="Post comment" />
-      </form> --}}
-{{!-- {{#if likes}}
-        <p>Likes: {{likes.length}}</p>
-      {{else}}
-        <p>Likes: 0</p>
-      {{/if}} --}}

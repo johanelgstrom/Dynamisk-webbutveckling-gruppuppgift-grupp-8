@@ -68,7 +68,6 @@ router.post("/posts", forceAuthorize, async (req, res) => {
       };
 
       const accessToken = jwt.sign(userData, process.env.JWTSECRET);
-      console.log(user._id);
       res.cookie("token", accessToken);
       res.redirect("/posts");
     } else {

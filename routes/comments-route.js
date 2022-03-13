@@ -4,7 +4,6 @@ const utils = require("../utils.js");
 const CommentsModel = require("../models/CommentsModel.js");
 const jwt = require("jsonwebtoken");
 const postsModel = require("../models/postsModel.js");
-const { sendStatus } = require("express/lib/response");
 const router = express.Router();
 
 //Om man inte är inloggad
@@ -64,9 +63,6 @@ router.get("/:id", forceAuthorize, async (req, res) => {
       comment.author
     );
   }
-  // console.log(res.locals);
-  // console.log(result);
-  // console.log(validAuthor);
 
   if (validAuthor === true) {
     if (result == true) {
@@ -142,7 +138,6 @@ router.get("/:id/unlike", forceAuthorize, async (req, res) => {
   const comment = await CommentsModel.findById(req.params.id).lean();
   const post = await postsModel.findById(comment.postId).lean();
 
-  console.log(post.comments.length);
 
   if (res.locals.fullName) {
     const user = res.locals.fullName;
@@ -326,9 +321,5 @@ router.get("/:id/delete", forceAuthorize, async (req, res) => {
     }
   }
 });
-
-// router.use('/', (req,res) => {
-//     res.status(404).render('not-found')
-//   })
 
 module.exports = router;

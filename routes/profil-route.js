@@ -3,12 +3,9 @@ const express = require("express");
 process.env.CONNECTION_STRING;
 
 const postsModel = require("../models/postsModel");
-const CommentsModel = require("../models/CommentsModel.js");
 const UsersModel = require("../models/UsersModels.js");
 const GoogleModel = require("../models/GoogleModels.js");
-const { getUniqueFilename } = require("../utils");
 const router = express.Router();
-const fileupload = require("express-fileupload");
 const jwt = require("jsonwebtoken");
 process.env.CONNECTION_STRING;
 

@@ -21,7 +21,6 @@ const getUniqueFilename = (filename) => {
 
 const checkIfLiked = async (username, id, model) => {
   const object = await model.findById(id).lean()
-  // console.log(object);
   if (object.likes.length > 0) {
     for (let i = 0; i < object.likes.length; i++) {
       if (object.likes[i] === username) {
