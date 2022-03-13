@@ -3,6 +3,7 @@ require("./mongoose.js");
 require("./passport.js");
 
 const passport = require("passport");
+const mongoose = require("mongoose");
 
 const express = require("express");
 const exphbs = require("express-handlebars");
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
   const { token } = req.cookies;
 
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
+    const { token } = req.cookies;
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
     res.locals.tokenData = tokenData.user;
     res.locals.loggedIn = true;
@@ -51,6 +53,8 @@ app.use((req, res, next) => {
     res.locals.loginInfo = tokenData.displayName;
     res.locals.user = tokenData.username;
     res.locals.userID = tokenData.userId;
+
+    // res.locals.userIDGoogle = tokenData.userId;
 
     // console.log(tokenData);
   } else {

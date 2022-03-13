@@ -1,39 +1,133 @@
-<a href="/logout">Log out</a>
-<h2>{{article.title}}</h2>
+<div class="loggedinlogocontainer">
 
-<img class="post-bild" src="{{article.imgUrl}}" />
+  <a href="/"><img
+      class="travelstories-logo-loggedin"
+      src="/images/TravelStories-logga-ingen-slogan.png"
+      alt="TravelStories logo"
+    />
+  </a>
 
- {{#if article.comments}}
-    {{#each comments}}
-        <div class="comment-container">
-            <p>Posted by {{author}}</p>
-            <p>{{description}}</p>
-            <p>{{formateDate time}}</p>
+  <a href="/logout"><button class="logoutbtn">Log out</button></a>
+</div>
+
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
+    </div>
+  </div>
+
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
+<div class="readcontainer">
+  <div class="readpostcontainer">
+    <div class="post-bild-container">
+      <img class="post-bild" src="{{article.imgUrl}}" />
+    </div>
+
+    {{#if validAuthor}}
+      <div class="editdeletebtn">
+        <a class="editbtn" href="/posts/{{article._id}}/edit">Edit post ✎</a>
+        <a class="deletebtn" href="/posts/{{article._id}}/delete">Delete story 🗑</a>
+      </div>
+    {{/if}}
+    <div class="titlecontentcontainer">
+      <h2>{{article.title}}</h2>
+      <div>{{article.content}}</div>
+    </div>
+    {{#if article.likes}}
+      <p class="likeheart"><i class="bi bi-heart"></i>
+        {{article.likes.length}}</p>
+    {{else}}
+      <p class="likeheart"><i class="bi bi-heart"></i>
+        0</p>
+    {{/if}}
+
+  </div>
+</div>
+
+<div class="readpostbtncontainer">
+  <div class="readpostbtn">
+    <a class="goback" href="/">Go back ↩︎</a>
+    {{#if result}}
+      <a class="unlikebtn" href="/posts/read-post/{{article._id}}/unlike"><i
+          class="bi bi-hand-thumbs-down"
+        ></i>
+        this post</a>
+    {{else}}
+      <a class="likebtn" href="/posts/read-post/{{article._id}}/like"><i
+          class="bi bi-hand-thumbs-up"
+        ></i>
+        this story</a>
+    {{/if}}
+  </div>
+</div>
+<div class="commentflexcontainer">
+  <div class="commentcontainer">
+    {{#if article.comments}}
+      {{#each article.comments}}
+        <div class="commenttextcontainer">
+          <span class="postedby">Posted by
+            {{author}}
+            {{formateDate time}}</span>
+          <div class="commenttext">{{description}}</div>
+          <div class="likecommentcontainer">
             {{#if likes}}
-            <a href="/comments/{{article._id}}"><p>Likes: {{likes.length}}</p></a>
+              <a class="commentlike" href="/comments/{{_id}}"><i
+                  class="bi bi-heart"
+                ></i>
+                {{likes.length}}</a>
             {{else}}
-            <a href="/comments/{{article._id}}"><p>Likes: 0</p></a>
+              <a class="commentlike" href="/comments/{{_id}}">
+                <i class="bi bi-heart"></i>
+                0</a>
             {{/if}}
+            {{#if result}}
+              <a class="unlikebtncomment" href="/comments/{{_id}}">
+                Interact with this comment</a>
+            {{else}}
+              <a class="likebtncomment" href="/comments/{{_id}}">
+                Interact with this comment</a>
+            {{/if}}
+          </div>
         </div>
-    {{/each}}
-{{/if}}
+      {{/each}}
+    {{/if}}
+  </div>
+</div>
+<div class="commentpostcontainer">
+  <div class="commentpostformcontainer">
+    <form
+      class="commentform"
+      action="/posts/read-post/{{article._id}}/comment"
+      method="post"
+    >
+      <textarea
+        class="commenttextarea"
+        name="comment"
+        placeholder="Comment post..."
+        required
+      ></textarea>
+      <input class="submitcommentbtn" type="submit" value="Post comment" />
+    </form>
+  </div>
+</div>
 
-<p>{{article.content}}</p>
-{{#if article.likes}}
-    <p>Likes: {{article.likes.length}}</p>
-{{else}}
-    <p>Likes: 0</p>
-{{/if}}
-{{#if result}}
-    <a href="/posts/read-post/{{article._id}}/unlike">Unlike this post</a>
-{{else}}
-    <a href="/posts/read-post/{{article._id}}/like">Like this post</a>
-{{/if}}
-<form action="/posts/read-post/{{article._id}}/comment" method="post">
-  <textarea name="comment" id="" cols="30" rows="10" required></textarea>
-  <input type="submit" value="Post comment" />
-</form>
-{{#if validAuthor}}
-<a href="/posts/{{article._id}}/edit"><button>edit post</button></a>
-<a href="/posts/{{article._id}}/delete"><button>delete post</button></a>
-{{/if}}
+{{!-- {{#each comments}}
+  <div class="comments-border-test">
+    <p><a href="/comments/{{_id}}">Post ID: {{_id}}</a></p>
+    <p>Comment on <a href="/posts/read-post/{{postId}}">{{postId}}</a></p>
+    <p>Posted by {{author}}</p>
+    <p>{{description}}</p>
+    <p>{{formateDate time}}</p>
+    {{#if likes}}
+      <p>Likes: {{likes.length}}</p>
+    {{else}}
+      <p>Likes: 0</p>
+    {{/if}}
+
+  </div>
+{{/each}} --}}

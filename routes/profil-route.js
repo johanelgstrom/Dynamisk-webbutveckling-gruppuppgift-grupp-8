@@ -18,7 +18,7 @@ const forceAuthorize = (req, res, next) => {
   if (token && jwt.verify(token, process.env.JWTSECRET)) {
     next();
   } else {
-    res.send(401).render('unauthorized')
+    res.redirect("/");
   }
 };
 
@@ -32,5 +32,7 @@ router.get("/", forceAuthorize, async (req, res) => {
 
   res.render("profil", { googleUser, user, articles });
 });
+
+module.exports = router;
 
 module.exports = router;

@@ -1,26 +1,65 @@
-<h3>{{comment._id}}</h3>
+<div class="loggedinlogocontainer">
 
-<div class="comments-border-test">
-        
-        <p><a href="/posts/read-post/{{comment.postId}}">Commented on: {{comment._id}}</a></p>
-        <p>Posted by {{comment.author}}</p>
-        <p>{{comment.description}}</p>
-        <p>{{formateDate comment.time}}</p>
-        {{#if result}}
-        <a href="/comments/{{comment._id}}/unlike">Unlike this comment</a>
-        {{else}}
-        <a href="/comments/{{comment._id}}/like">Like this comment</a>
-        {{/if}}
-        {{#if comment.likes}}
-        <p>Likes: {{comment.likes.length}}</p>
-        {{else}}
-        <p>Likes: 0</p>
-        {{/if}}
-        
-        
-        
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
+
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
+
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
     </div>
-{{#if validAuthor}}
-<a href="/comments/{{comment._id}}/edit">Edit</a>
-<a href="/comments/{{comment._id}}/delete">Delete</a>
+  </div>
+
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
+<div class="readcontainer">
+  <div class="readpostcontainer">
+      <span class="postedby">By {{comment.author}}</span>
+        <p class="comment-content">{{comment.description}}</p>
+        {{#if validAuthor}}
+<div class="editdeletebtn">
+    <a class="editbtn" href="/comments/{{comment._id}}/edit">Edit comment ✎</a>
+    <a class="deletebtn" href="/comments/{{comment._id}}/delete">Delete comment 🗑</a>
+</div>
 {{/if}}
+        <div class="likes-time-container">
+            {{#if comment.likes}}
+      <p style="margin-top: 20px;"><i class="bi bi-heart"></i>
+        {{comment.likes.length}}</p>
+    {{else}}
+      <p style="margin-top: 20px;"><i class="bi bi-heart"></i>
+        0</p>
+    {{/if}}
+    <p>{{formateDate comment.time}}</p>
+        </div>
+  </div>
+</div>
+<div class="readpostbtncontainer">
+  <div class="readpostbtn">
+    <a class="goback" href="/posts/read-post/{{comment.postId}}">Go back ↩︎</a>
+    {{#if result}}
+      <a class="unlikebtn" href="/comments/{{comment._id}}/unlike"><i
+          class="bi bi-hand-thumbs-down"
+        ></i>
+        this comment</a>
+    {{else}}
+      <a class="likebtn" href="/comments/{{comment._id}}/like"><i
+          class="bi bi-hand-thumbs-up"
+        ></i>
+        this comment</a>
+    {{/if}}
+  </div>
+</div>
+
+
+
+

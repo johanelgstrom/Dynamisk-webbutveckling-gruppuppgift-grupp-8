@@ -1,9 +1,21 @@
-<a href="/logout">Log out</a>
-<h2>Couldn't find the page (404)</h2>
+<div class="loggedinlogocontainer">
 
-{{#if loggedIn}}
-  <a href="/posts">Posts</a>
-  <a href="/comments">Comments</a>
-{{else}}
-  <a href="/">Login</a>
-{{/if}}
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
+
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
+
+<div class="error-container">
+    <h2>Couldn't find the page (404)</h2>
+    <p>Error code <b>404</b></p> 
+
+    {{#if loggedIn}}
+      <a href="/posts" class="error-btn">Back to posts</a>
+    {{else}}
+      <a href="/" class="error-btn">Back to login</a>
+    {{/if}}
+</div>

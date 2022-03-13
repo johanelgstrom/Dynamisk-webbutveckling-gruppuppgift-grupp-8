@@ -1,8 +1,54 @@
-<h2>edit post: {{_title}}</h2>
+<div class="loggedinlogocontainer">
 
-<form action="/posts/{{_id}}/edit" method="post" enctype="multipart/form-data">
+  <a href="/"><img
+      class="travelstories-logo-loggedin"
+      src="/images/TravelStories-logga-ingen-slogan.png"
+      alt="TravelStories logo"
+    />
+  </a>
 
-    <input type="text" name="title" value="{{title}}"> <br>
-    <textarea name="content" placeholder="{{description}}"></textarea><br>
-    <input type="submit" value="save">
-</form>
+  <a href="/logout"><button class="logoutbtn">Log out</button></a>
+</div>
+
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
+    </div>
+  </div>
+
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
+
+<div class="editposttext">Edit post</div>
+
+<div class="centercontainer centerlogin">
+  <form
+    class="registerform"
+    action="/posts/{{_id}}/edit"
+    method="post"
+    enctype="multipart/form-data"
+  >
+
+    <input
+      class="logininput loginpage editform"
+      type="text"
+      name="title"
+      value="{{title}}"
+    />
+    <br />
+    <textarea
+      class="logininput loginpage editform edittextarea"
+      name="content"
+      placeholder="{{description}}"
+    ></textarea><br />
+    <input
+      class="logininput loginpage editsavebtn"
+      type="submit"
+      value="Save story"
+    />
+  </form>
+</div>

@@ -46,6 +46,7 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
       author: res.locals.fullName,
       postedBy: res.locals.userID,
       title: req.body.title,
+      content: req.body.content,
       // imageName: req.body.imageName,
       imgUrl: "/uploads/" + filename,
       country: req.body.country,
@@ -58,11 +59,12 @@ router.post("/new-post", forceAuthorize, async (req, res) => {
     const loginInfo = res.locals.loginInfo;
     const { token } = req.cookies;
     const tokenData = jwt.decode(token, process.env.JWTSECRET);
-    const userId = mongoose.Types.ObjectId(tokenData);
+    const userId = mongoose.Types.ObjectId(tokenData.userId);
     const newArticle = new postsModel({
       author: loginInfo,
       postedBy: userId,
       title: req.body.title,
+      content: req.body.content,
       // imageName: req.body.imageName,
       imgUrl: "/uploads/" + filename,
       country: req.body.country,

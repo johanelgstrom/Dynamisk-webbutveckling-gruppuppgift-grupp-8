@@ -1,12 +1,13 @@
 <div class="loggedinlogocontainer">
 
-  <img
-    class="travelstories-logo-loggedin"
-    src="/images/TravelStories-logga-ingen-slogan.png"
-    alt="TravelStories logo"
-  />
+  <a href="/"><img
+      class="travelstories-logo-loggedin"
+      src="/images/TravelStories-logga-ingen-slogan.png"
+      alt="TravelStories logo"
+    />
+  </a>
 
-  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+  <a href="/logout"><button class="logoutbtn">Log out</button></a>
 </div>
 
 <div class="loggedinascontainer">
@@ -23,10 +24,12 @@
 </div>
 <div class="onlytextalign poststext">All travel stories</div>
 <div class="choosecountrycontainer">
+
   <select class="loginpage onlytextalign choosecountrybtn" name="country">
 
     <option disabled selected>Choose a country
     </option>
+
     <option value="Afghanistan">Afghanistan</option>
     <option value="Albania">Albania</option>
     <option value="Algeria">Algeria</option>
@@ -225,6 +228,7 @@
     <option value="Zambia">Zambia</option>
     <option value="Zimbabwe">Zimbabwe</option>
   </select>
+
 </div>
 <div class="postflowcontainer">
   {{#each articles}}

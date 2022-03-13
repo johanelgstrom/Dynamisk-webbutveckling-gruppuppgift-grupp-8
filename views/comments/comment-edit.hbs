@@ -1,6 +1,54 @@
-<h2>Edit comment</h2>
+<div class="loggedinlogocontainer">
+
+  <img
+    class="travelstories-logo-loggedin"
+    src="/images/TravelStories-logga-ingen-slogan.png"
+    alt="TravelStories logo"
+  />
+
+  <button class="logoutbtn"><a href="/logout">Log out</a></button>
+</div>
+
+<div class="loggedinascontainer">
+  <div class="usercontainer">
+    <div class="traveltext">Traveler logged in </div>
+    <div class="profillink">
+      <a class="profillink" href="/profil/{{_id}}">
+        {{fullName}}
+        {{loginInfo}}</a>
+    </div>
+  </div>
+
+  <button class="createpostbtn"><a href="/posts/new-post">Create post</a></button>
+</div>
+
+<div class="editposttext">Edit comment</div>
+
+<div class="centercontainer centerlogin">
+  <form
+    class="registerform"
+    action="/comments/{{_id}}/edit"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <br />
+    <textarea
+      class="logininput loginpage editform edittextarea"
+      name="description"
+      placeholder="{{description}}"
+      required
+    ></textarea><br />
+    <input
+      class="logininput loginpage editsavebtn"
+      type="submit"
+      value="Save comment"
+    />
+  </form>
+</div>
+
+{{!-- <h2>Edit comment</h2>
 
 <form action="/comments/{{_id}}/edit" method="post">
     <input type="text" name="description" value="{{description}}">
     <input type="submit" value="Save">
-</form>
+</form> --}}
