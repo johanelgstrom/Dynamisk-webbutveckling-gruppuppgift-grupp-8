@@ -1,0 +1,39 @@
+<a href="/logout">Log out</a>
+<h2>{{article.title}}</h2>
+
+<img class="post-bild" src="{{article.imgUrl}}" />
+
+ {{#if article.comments}}
+    {{#each comments}}
+        <div class="comment-container">
+            <p>Posted by {{author}}</p>
+            <p>{{description}}</p>
+            <p>{{formateDate time}}</p>
+            {{#if likes}}
+            <a href="/comments/{{article._id}}"><p>Likes: {{likes.length}}</p></a>
+            {{else}}
+            <a href="/comments/{{article._id}}"><p>Likes: 0</p></a>
+            {{/if}}
+        </div>
+    {{/each}}
+{{/if}}
+
+<p>{{article.content}}</p>
+{{#if article.likes}}
+    <p>Likes: {{article.likes.length}}</p>
+{{else}}
+    <p>Likes: 0</p>
+{{/if}}
+{{#if result}}
+    <a href="/posts/read-post/{{article._id}}/unlike">Unlike this post</a>
+{{else}}
+    <a href="/posts/read-post/{{article._id}}/like">Like this post</a>
+{{/if}}
+<form action="/posts/read-post/{{article._id}}/comment" method="post">
+  <textarea name="comment" id="" cols="30" rows="10" required></textarea>
+  <input type="submit" value="Post comment" />
+</form>
+{{#if validAuthor}}
+<a href="/posts/{{article._id}}/edit"><button>edit post</button></a>
+<a href="/posts/{{article._id}}/delete"><button>delete post</button></a>
+{{/if}}
