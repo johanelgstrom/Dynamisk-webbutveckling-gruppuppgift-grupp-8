@@ -86,16 +86,11 @@
                 0</a>
             {{/if}}
             {{#if result}}
-              <a
-                class="unlikebtncomment"
-                href="/comments/{{comment._id}}/unlike"
-              ><i class="bi bi-hand-thumbs-down"></i>
-                this comment</a>
+              <a class="unlikebtncomment" href="/comments/{{_id}}">
+                Interact with this comment</a>
             {{else}}
-              <a class="likebtncomment" href="/comments/{{comment._id}}/like"><i
-                  class="bi bi-hand-thumbs-up"
-                ></i>
-                this comment</a>
+              <a class="likebtncomment" href="/comments/{{_id}}">
+                Interact with this comment</a>
             {{/if}}
           </div>
         </div>
